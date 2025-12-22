@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg fixed-top navbar-transparent nav" color-on-scroll="500">
+    <div class="container">
+        <div class="navbar-translate">
+            <a class="navbar-brand" href="http://localhost:4500/">Riya Orangery</a>
+             <div ngbDropdown class="d-inline-block dropdown ">
+                <a class="navbar-brand" id="dropdownBasic1" ngbDropdownToggle>Flora</a>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-primary">
+                    <a class="dropdown-item" *ngFor="let flora of flora_detail">{{ flora }}</a>
+                </div>
+            </div>
+            <button class="navbar-toggler navbar-burger" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation" (click)="sidebarToggle()">
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+                <span class="navbar-toggler-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse" id="navbarToggler">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Cart" data-placement="bottom" target="_blank">
+                        <i class="nc-icon nc-bag-16"></i>
+                        <p class="d-lg-none">Cart</p>
+                        <span class="cart-count">5</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" rel="tooltip" title="Wishlist" data-placement="bottom" target="_blank">
+                         <i class="nc-icon nc-favourite-28"></i>
+                        <p class="d-lg-none">Wishlist</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
