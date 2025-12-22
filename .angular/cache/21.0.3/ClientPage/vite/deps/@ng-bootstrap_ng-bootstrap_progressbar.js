@@ -3,7 +3,7 @@ import {
   NgbProgressbarConfig,
   NgbProgressbarModule,
   NgbProgressbarStacked
-} from "./chunk-HDJZUADZ.js";
+} from "./chunk-HNX2JDIB.js";
 import "./chunk-RI6D2QIJ.js";
 import "./chunk-RYEYUHRV.js";
 import "./chunk-LX6XZY43.js";

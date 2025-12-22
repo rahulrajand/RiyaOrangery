@@ -3,7 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', loadChildren: () => import('./components/components-module').then(m => m.ComponentsModule) },
 ];
 

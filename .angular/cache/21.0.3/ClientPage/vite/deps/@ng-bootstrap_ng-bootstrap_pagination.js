@@ -9,7 +9,7 @@ import {
   NgbPaginationNumber,
   NgbPaginationPages,
   NgbPaginationPrevious
-} from "./chunk-7TKWJNHU.js";
+} from "./chunk-6ZC7NKPQ.js";
 import "./chunk-RI6D2QIJ.js";
 import "./chunk-RYEYUHRV.js";
 import "./chunk-LX6XZY43.js";

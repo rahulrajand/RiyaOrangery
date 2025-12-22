@@ -2,9 +2,13 @@
 import { Component, OnInit, Inject, Renderer2, ElementRef, ViewChild } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
+import { PlatformLocation, Location } from '@angular/common';
 import { Navbar } from './shared/navbar/navbar';
 import { filter, Subscription } from 'rxjs';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
+import { routes } from './app-routing-module';
 
 @Component({
   selector: 'app-root',
@@ -43,3 +47,11 @@ export class App {
         }
     }
 }
+
+
+bootstrapApplication(App, {
+  providers: [
+    provideRouter(routes),
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ]
+}).catch(err => console.error(err));
