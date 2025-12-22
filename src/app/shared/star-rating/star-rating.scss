@@ -1,0 +1,11 @@
+.rating-list li {
+  display: inline-block;
+  font-size: 24px; /* Adjust size as needed */
+  color: #ddd; /* Color for unrated stars */
+  padding: 0 0px;
+  cursor: pointer;
+}
+
+.rating-list li.selected {
+  color: #ffd700; /* Color for rated stars (gold/yellow) */
+}
