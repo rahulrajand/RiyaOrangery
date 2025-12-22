@@ -1,0 +1,7 @@
+<ul class="rating-list" style="padding-left: 0;">
+  <li *ngFor="let star of stars"
+      (click)="countStar(star)"
+      [ngClass]="{'selected': (star <= rating)}">
+    ★
+  </li>
+</ul>

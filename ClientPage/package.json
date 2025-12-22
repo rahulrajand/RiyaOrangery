@@ -1,0 +1,86 @@
+{
+  "name": "client-page",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:ClientPage": "node dist/ClientPage/server/server.mjs"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "packageManager": "npm@11.6.2",
+  "dependencies": {
+    "@angular/animations": "^21.0.5",
+    "@angular/common": "^21.0.0",
+    "@angular/compiler": "^21.0.0",
+    "@angular/core": "^21.0.0",
+    "@angular/forms": "^21.0.0",
+    "@angular/localize": "^21.0.5",
+    "@angular/platform-browser": "^21.0.0",
+    "@angular/platform-browser-dynamic": "^21.0.5",
+    "@angular/platform-server": "^21.0.0",
+    "@angular/router": "^21.0.0",
+    "@angular/ssr": "^21.0.3",
+    "@fortawesome/angular-fontawesome": "^4.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.1.0",
+    "@ng-bootstrap/ng-bootstrap": "^20.0.0",
+    "@ng-icons/core": "^33.0.0",
+    "@ng-icons/feather-icons": "^33.0.0",
+    "@ng-icons/heroicons": "^33.0.0",
+    "bootstrap": "^4.5.3",
+    "core-js": "^3.47.0",
+    "express": "^5.1.0",
+    "jquery": "^3.7.1",
+    "jw-bootstrap-switch-ng2": "^2.0.5",
+    "ng2-nouislider": "^2.0.0",
+    "ngx-bootstrap-icons": "^1.9.3",
+    "nouislider": "^15.8.1",
+    "popper.js": "^1.16.1",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0",
+    "zone.js": "^0.16.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^21.0.3",
+    "@angular/build": "^21.0.3",
+    "@angular/cli": "^21.0.3",
+    "@angular/compiler-cli": "^21.0.0",
+    "@angular/language-service": "^21.0.5",
+    "@types/bootstrap": "^5.2.10",
+    "@types/chartist": "^0.11.1",
+    "@types/express": "^5.0.1",
+    "@types/jasmine": "^5.1.13",
+    "@types/jasminewd2": "^2.0.13",
+    "@types/node": "^20.17.19",
+    "codelyzer": "^6.0.2",
+    "cross-env": "^10.1.0",
+    "gh-pages": "^6.3.0",
+    "jasmine-core": "^5.13.0",
+    "jasmine-spec-reporter": "^7.0.0",
+    "jsdom": "^27.1.0",
+    "karma": "^6.4.4",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-coverage-istanbul-reporter": "^3.0.3",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.1.0",
+    "protractor": "^7.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
