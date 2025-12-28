@@ -136,6 +136,11 @@
   }
 }
 
+.zoom-wrappers {
+  position: relative;
+  overflow: hidden;       /* prevents scroll & layout shift */
+}
+
 .zoom-wrapper {
   position: relative;
   width: 100vw;
