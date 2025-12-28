@@ -38,7 +38,7 @@
 .noUi-connect,
 .noUi-origin {
   will-change: transform;
-  position: absolute;
+  position: relative;
   z-index: 1;
   top: 0;
   right: 0;
@@ -55,7 +55,7 @@
 }
 .noUi-origin {
   height: 10%;
-  width: 10%;
+  width: 100%;
 }
 /* Offset direction
  */
@@ -102,7 +102,7 @@
   height: 14px;
   border-radius: 100%;
   transition: all .2s ease-out;
-  right: -17px;
+  right: -1px;
   top: -6px;
 }
 .noUi-vertical {

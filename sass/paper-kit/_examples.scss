@@ -165,6 +165,19 @@
   will-change: auto;
 }
 
+.zoom-content-prod {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-100px) !important;
+  will-change: auto;
+}
+
 /* Zoom animation */
 @keyframes zoomIn {
   from {
