@@ -101,3 +101,10 @@
   object-fit: cover; /* KEY LINE */
   display: block;
 }
+
+@media (max-width: 768px) {
+  .product-image img {
+    height: auto;
+    object-fit: contain;
+  }
+}

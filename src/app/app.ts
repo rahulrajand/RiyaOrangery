@@ -7,11 +7,12 @@ import {
   ViewChild,
   PLATFORM_ID,
 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { LocationStrategy, PlatformLocation, Location } from '@angular/common';
 import { Navbar } from './shared/navbar/navbar';
 import { filter, Subscription } from 'rxjs';
+import e from 'express';
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
@@ -20,6 +21,7 @@ import { filter, Subscription } from 'rxjs';
 })
 export class App {
   @ViewChild(Navbar) navbarr!: Navbar;
+  isProductPage = false;
 
   constructor(
     private renderer: Renderer2,
@@ -35,13 +37,32 @@ export class App {
     }
     const navbar: HTMLElement = this.element.nativeElement.children[0].children[0];
     const setNavbar = () => {
-      const isProductPage = window.location.hash.toLowerCase().includes('/product');
+      const isProductPage = false;
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe((event: NavigationEnd) => {
+          const url = event.urlAfterRedirects.toLowerCase();
+          console.log('Navigated to URL:', url);
 
-      if (isProductPage) {
+          this.isProductPage = url.includes('/product');
+          console.log('isProductPage', this.isProductPage);
+          if (this.isProductPage) {
+            navbar.classList.remove('navbar-transparent');
+            return;
+          } else {
+            // Force transparent unless scrolled past 150
+            if (window.pageYOffset < 150) {
+              navbar.classList.add('navbar-transparent');
+            } else {
+              navbar.classList.remove('navbar-transparent');
+            }
+          }
+        });
+      console.log('isProductPage', this.isProductPage);
+      if (this.isProductPage) {
         navbar.classList.remove('navbar-transparent');
         return;
       }
-
       // Force transparent unless scrolled past 150
       if (window.pageYOffset < 150) {
         navbar.classList.add('navbar-transparent');
