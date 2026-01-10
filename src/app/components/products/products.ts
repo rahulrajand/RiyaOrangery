@@ -34,8 +34,12 @@ export class Products {
     private title: Title
   ) {}
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('name');
-    console.log(id);
+    this.route.paramMap.subscribe((params) => {
+      const id = params.get('name');
+      this.loadPlantData(id);
+    });
+  }
+  loadPlantData(id: string | null) {
     this.product_detail = this.componentsService.getProductByname(id!) as ProductDetails;
     this.title.setTitle(`${this.product_detail.productname} Indoor Plant | Riya Orangery`);
 
@@ -52,10 +56,20 @@ export class Products {
       this.full_product_detail = data;
     });
     console.log(this.full_product_detail);
+    this.prod_detail = [];
+    const currentLabels = this.product_detail.productlabel
+      .split(',')
+      .map((l) => l.trim().toLowerCase());
+
     for (let i = 0; i < this.full_product_detail.length; i++) {
+      const itemLabels = this.full_product_detail[i].productlabel
+        .split(',')
+        .map((l) => l.trim().toLowerCase());
+
+      const isAnyLabelMatch = currentLabels.some((label) => itemLabels.includes(label));
       if (
-        this.full_product_detail[i].productlabel == this.product_detail.productlabel &&
-        this.full_product_detail[i].productid != this.product_detail.productid
+        isAnyLabelMatch &&
+        this.full_product_detail[i].productid !== this.product_detail.productid
       ) {
         this.prod_detail.push(this.full_product_detail[i]);
       }
