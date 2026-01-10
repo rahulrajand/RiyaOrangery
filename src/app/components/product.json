@@ -2,39 +2,87 @@
   "product": [
     {
       "productid": "1",
-      "productname": "Monstera Deliciosa",
-      "productlabel": "Indoor ",
-      "productlowprice": 40,
+      "productname": "String of Pearls",
+      "productlabel": "Semi-Indoor, Hanging",
+      "productlowprice": 80,
       "producthighprice": 60,
-      "productprice": [40, 50, 55, 60],
+      "productprice": [80, 190],
       "productdisc": 10,
       "productrating": 4,
-      "productsize": ["2", "4", "6", "8"],
-      "productpotsize": ["2", "4", "6", "8"],
-      "frontpage": true,
-      "productimg": ["./img/monstera1.webp", "./img/monstera2.webp"],
-      "description": "Monstera Deliciosa, often called the Swiss Cheese Plant, is a popular tropical indoor plant known for its large, glossy green leaves with natural splits and holes. These unique leaf patterns help the plant withstand heavy rain and capture sunlight in its native rainforest habitat. Native to Central America, Monstera thrives indoors with bright, indirect light and moderate watering. As it matures, the leaves grow bigger and develop deeper splits, making it a favorite for home décor and modern interiors. 🌱 Why people love Monstera Deliciosa: Easy to care for and beginner-friendly",
-      "shortDescription": "Monstera deliciosa is a popular indoor plant known for its large, glossy green leaves with natural splits. It is easy to care for, grows well in bright indirect light, and adds a bold tropical look to any space. 🌿",
+      "productsize": ["3", "5"],
+      "productpotsize": ["3", "4"],
+      "frontpage": false,
+      "productimg": ["./img/Plants/StringofPearl1.jpg", "./img/Plants/StringofPearl2.jpg"],
+      "description": "String of Pearls is a beautiful trailing succulent with small, round, bead-like green leaves that hang gracefully over pots and baskets. It is easy to care for, loves bright indirect light, and adds a soft, elegant touch to indoor spaces—perfect for shelves and hanging planters 🌱",
+      "shortDescription": "String of Pearls is a trailing succulent with round, bead-like green leaves. It’s easy to care for, loves bright indirect light, and looks perfect in hanging pots or shelves 🌿",
       "stockAvailable": true,
-      "discount": 0
+      "discount": 0,
+      "tips": [
+        "Water: Water only when the soil is completely dry. Overwatering causes root rot.\nSunlight: Bright, indirect light is best. A little morning sun is okay.\nUse well-draining succulent/cactus soil. Never use heavy garden soil.\nPerfect low-maintenance trailing succulent for hanging pots and shelves"
+      ]
     },
     {
       "productid": "2",
-      "productname": "String Of Pearls",
-      "productlabel": "Semi-Indoor",
+      "productname": "Jade (variegated)",
+      "productlabel": "Indoor",
       "productlowprice": 140,
       "producthighprice": 360,
-      "productprice": [140, 360],
+      "productprice": [60, 360],
       "productdisc": 10,
       "productrating": 1,
       "productsize": ["2", "4"],
       "productpotsize": ["2", "4"],
       "frontpage": true,
-      "productimg": ["./img/stringofpearl1.webp", "./img/stringofpearl2.webp"],
-      "description": "String of Pearls is a beautiful trailing succulent with small, round, bead-like green leaves that hang gracefully over pots and baskets. It is easy to care for, loves bright indirect light, and adds a soft, elegant touch to indoor spaces—perfect for shelves and hanging planters 🌱",
-      "shortDescription": "String of Pearls is a trailing succulent with round, bead-like green leaves. It’s easy to care for, loves bright indirect light, and looks perfect in hanging pots or shelves 🌿",
+      "productimg": ["./img/Plants/JadeVarigated1.jpg"],
+      "description": "The Variegated Jade is a beautiful, slow-growing succulent loved for its thick, fleshy leaves highlighted with creamy white or yellow edges and soft green centers. Each leaf looks hand-painted, making this plant a standout in any indoor plant collection. Known as a symbol of good luck, prosperity, and positive energy, it’s perfect for homes and workspaces.",
+      "shortDescription": "Variegated Jade is a compact, low-maintenance succulent with thick green leaves edged in creamy white or yellow. Known for bringing good luck and prosperity, it thrives in bright indirect light and needs minimal watering—perfect for homes and offices. 🌿✨",
       "stockAvailable": true,
-      "discount": 5
+      "discount": 0,
+      "tips": [
+        "Watering: Water only when the soil is completely dry. Overwatering can cause root rot.\nSunlight: Loves bright, indirect sunlight; a few hours of gentle morning sun is ideal.\nSoil: Use well-draining soil (succulent/cactus mix) to keep roots healthy.\nTip: Perfect for beginners and low-maintenance homes 🌿"
+      ]
+    },
+    {
+      "productid": "3",
+      "productname": "Blue Bird",
+      "productlabel": "Semi-Indoor",
+      "productlowprice": 140,
+      "producthighprice": 360,
+      "productprice": [60, 360],
+      "productdisc": 10,
+      "productrating": 1,
+      "productsize": ["2", "4"],
+      "productpotsize": ["2", "4"],
+      "frontpage": true,
+      "productimg": ["./img/Plants/BlueBird1.jpg", "./img/Plants/BlueBird2.jpg"],
+      "description": "Blue Bird (Echeveria) is a stunning rosette-shaped succulent with soft blue-gray leaves highlighted by pink edges. Its powdery, pastel tones give it a calm and elegant look, making it perfect for indoor décor and succulent arrangements. Easy to care for, it loves bright light, well-draining soil, and minimal watering—ideal for beginners and plant lovers alike. 🌿💙",
+      "shortDescription": "Blue Bird is a beautiful succulent with soft blue-gray rosette leaves and delicate pink edges. Elegant, compact, and easy to care for, it thrives in bright light with minimal watering—perfect for homes and offices. 🌿💙",
+      "stockAvailable": true,
+      "discount": 0,
+      "tips": [
+        "Water: Water only when the soil is completely dry. Overwatering can cause root rot.\nSunlight: Bright light with gentle morning sun. Too much harsh sun may burn leaves.\nSoil: Well-draining succulent/cactus mix. Good drainage is a must.\n\nPerfect for beginners and indoor spots with good light 🌿"
+      ]
+    },
+    {
+      "productid": "4",
+      "productname": "Graptovira Opalina (Echeveria hybrid)",
+      "productlabel": "Semi-Indoor",
+      "productlowprice": 140,
+      "producthighprice": 360,
+      "productprice": [60, 360],
+      "productdisc": 10,
+      "productrating": 1,
+      "productsize": ["2", "4"],
+      "productpotsize": ["2", "4"],
+      "frontpage": true,
+      "productimg": ["./img/Plants/Graptovira1.jpg"],
+      "description": "Graptoveria Opalina is a charming succulent with thick, rounded leaves in soft pastel shades of blue, green, and lavender, often blushing pink under bright light. Its neat rosette form and powdery finish make it a favorite for pots and succulent arrangements. Easy to grow and low maintenance, it prefers bright light, well-draining soil, and minimal watering—perfect for beginners and collectors alike. 🌿✨",
+      "shortDescription": "Graptoveria Opalina is a lovely rosette succulent with thick pastel blue-green leaves that blush pink in bright light. Compact, low-maintenance, and perfect for indoor décor and succulent collections. 🌿✨",
+      "stockAvailable": true,
+      "discount": 0,
+      "tips": [
+        "Watering: Water only when the soil is completely dry. Avoid overwatering; it’s drought-tolerant.\nSunlight: Needs bright light to full sun (4–6 hours). More light brings out its beautiful pastel colors.\nSoil: Use well-draining succulent/cactus mix. Good drainage is very important to prevent root rot.\n\nPerfect for beginners and indoor sunny spots 🌿"
+      ]
     }
   ]
 }

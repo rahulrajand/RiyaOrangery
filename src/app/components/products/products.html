@@ -166,15 +166,25 @@
           <li [ngbNavItem]="2">
             <a ngbNavLink style="font-size: medium; font-weight: bold">Tips</a>
             <ng-template ngbNavContent>
-              <h2 style="font-size: medium">No Tips yet</h2>
+              <h2 style="font-size: medium">{{ product_detail.tips }}</h2>
             </ng-template>
           </li>
         </ul>
 
         <div [ngbNavOutlet]="nav" class="mt-2"></div>
       </div>
+      <div class="container">
+        <div class="" style="text-align: left">
+          <h4 style="font-weight: 600">Disclaimer:</h4>
+          <h5>
+            Plant care information is for general informational purposes only. Specific needs may
+            vary based on your local climate and growing conditions…!!! For all succulent And
+            cactus..👆🏼👆🏼
+          </h5>
+        </div>
+      </div>
     </div>
-    <div class="section" #mySection>
+    <div class="section">
       <div class="container">
         <div class="" style="text-align: left">
           <h2 style="font-weight: 600">Related Product</h2>

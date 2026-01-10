@@ -98,6 +98,7 @@ export class ComponentsService {
       product.stockAvailable = data.product[prod].stockAvailable;
       product.discount = data.product[prod].discount;
       product.productpotsize = data.product[prod].productpotsize;
+      product.tips = data.product[prod].tips;
 
       products.push(product);
     }

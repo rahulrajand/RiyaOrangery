@@ -15,6 +15,7 @@ export class ProductDetails {
     public description: string,
     public discount: number,
     public selected: boolean,
+    public tips?: string[],
     public shortDescription?: string,
     public isWishlisted: boolean = false,
     public stockAvailable: boolean = false
