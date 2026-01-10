@@ -8,12 +8,21 @@
     <div class="content-center zoom-content">
       <div class="container">
         <div class="title-brand">
-          <h1 class="presentation-titles">Indoor Plants</h1>
-          <h2 class="presentation-subtitle text-center">We Care for each plants</h2>
+          <h1 class="presentation-titles">Indoor Plants & Succulents – <br />Riya Orangery</h1>
+          <h2 class="presentation-subtitle text-center">
+            Healthy Indoor Plants for Homes & Offices
+          </h2>
           <br /><br /><br /><br />
-          <button type="button" class="btn text-center">Explore Now</button>
+          <button type="button" class="btn text-center" (click)="scrollToSection()">
+            Explore Indoor Plants
+          </button>
         </div>
       </div>
+    </div>
+    <!-- LocalStorage Notice at bottom -->
+    <div *ngIf="showNotice" class="notice-banner-bottom">
+      <p>Your wishlist and Cart are saved locally on this device.</p>
+      <button class="dismiss-btn" (click)="dismissNotice()">✖</button>
     </div>
   </div>
   <div class="main">
@@ -21,11 +30,11 @@
       <div class="container info-section">
         <div class="vertical-rule grid-item">
           <div>
-            <i class="nc-icon nc-spaceship" style="font-size: 80px"></i>
+            <ng-icon name="heroArchiveBox" style="font-size: 80px"></ng-icon>
           </div>
           <br />
           <div>
-            <h6>Fast Shipping</h6>
+            <h6>Secure Packing</h6>
           </div>
           <br />
         </div>
@@ -61,80 +70,59 @@
       </div>
     </div>
   </div>
-  <div class="section">
+  <div class="section" #mySection>
     <div class="container">
       <div style="text-align: center">
         <h3>Our Shop</h3>
       </div>
       <div class="title-uppercase blockquote" style="text-align: center">
-        <h2 style="font-weight: 600">Best Sellers</h2>
+        <h3 style="font-weight: 600">Best Sellers</h3>
       </div>
     </div>
     <div class="container front-display-section">
-      <div class="front-display-section-item">
+      <div class="front-display-section-item" *ngFor="let prod of product_detail">
         <br />
-        <div class="card" style="margin-right: 20px">
+        <div class="card" style="margin-right: 20px" [routerLink]="['/Product', prod.productname]">
           <div class="card-cover">
             <img
+              class="product-image"
               style="max-width: 100%"
-              src="./img/faces/ayo-ogunseinde-2.jpg"
-              alt="Description of the image"
+              src="{{ prod.productimg[0] }}"
+              alt="{{ prod.productname }} indoor plant"
             />
+            <div class="stock-btn" *ngIf="prod.stockAvailable === false">Out of stock</div>
+            <div class="discount-btn" *ngIf="prod.discount !== 0">{{ prod.discount }}%</div>
+            <button class="wishlist-btn" (click)="toggleWishlist(prod, $event)">
+              <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
+            </button>
           </div>
         </div>
-        <p style="text-align: left">Label1, Label2</p>
-        <p class="p-title" style="text-align: left">Plant</p>
+        <p style="text-align: left; font-size: smaller">{{ prod.productlabel }}</p>
+        <p class="p-title" style="text-align: left">{{ prod.productname }}</p>
         <p class="p-title" style="text-align: left">
-          <span>&#8377;</span>40-<span>&#8377;</span>60
+          <span>&#8377;</span>{{ prod.productlowprice }}-<span>&#8377;</span
+          >{{ prod.producthighprice }}
         </p>
-        <app-star-rating [rating]="4" [edit_rate]="1" style="text-align: left"></app-star-rating>
-      </div>
-      <div class="front-display-section-item">
-        <br />
-        <div class="card" style="margin-right: 20px">
-          <div class="card-cover">
-            <img
-              style="max-width: 100%"
-              src="./img/faces/ayo-ogunseinde-2.jpg"
-              alt="Description of the image"
-            />
-          </div>
-        </div>
-        <p style="text-align: left">Label1, Label2</p>
-        <p class="p-title" style="text-align: left">Plant</p>
-        <p class="p-title" style="text-align: left">
-          <span>&#8377;</span>40-<span>&#8377;</span>60
-        </p>
-        <app-star-rating [rating]="4"  [edit_rate]="1" style="text-align: left"></app-star-rating>
-      </div>
-      <div class="front-display-section-item">
-        <br />
-        <div class="card" style="margin-right: 20px">
-          <div class="card-cover">
-            <img
-              style="max-width: 100%"
-              src="./img/faces/ayo-ogunseinde-2.jpg"
-              alt="Description of the image"
-            />
-          </div>
-        </div>
-        <p style="text-align: left">Label1, Label2</p>
-        <p class="p-title" style="text-align: left">Plant</p>
-        <p class="p-title" style="text-align: left">
-          <span>&#8377;</span>40-<span>&#8377;</span>60
-        </p>
-        <app-star-rating [rating]="4"  [edit_rate]="1" style="text-align: left"></app-star-rating>
+        <!-- Star Rating Component
+        <app-star-rating
+          [rating]="prod.productrating"
+          [edit_rate]="1"
+          style="text-align: left"
+        ></app-star-rating>
+         -->
       </div>
     </div>
     <div style="text-align: center">
-      <button type="button" class="btn text-center">More Products</button>
+      <button type="button" class="btn text-center" [routerLink]="'../collection/all'">
+        More Products
+      </button>
     </div>
   </div>
-  <div class="section" style="background-color: rgb(252, 239, 224);">
+  <div class="section" style="background-color: rgb(252, 239, 224)">
     <div class="container front-knowledge-section">
       <div class="front-knowledge-section-item">
         <div>
-          <h5 style="text-align: left">Knowledge Base</h5>
+          <h2 style="text-align: left">Plant Care Knowledge Base</h2>
         </div>
         <div>
           <h2 style="font-weight: 600; text-align: left">
@@ -142,22 +130,45 @@
           </h2>
         </div>
         <div>
-          <img
-              style="max-width: 100%"
-              src="./img/bruno-abatti.jpg"
-              alt="Description of the image"
-            />
+          <img style="max-width: 100%" src="./img/front1.jpeg" alt="Description of the image" />
         </div>
       </div>
       <div class="front-knowledge-section-item">
         <div>
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-          <p style="font-weight: 100; text-align: left; padding-left: 20px;">
-            We will teach you how to care for potted plants and flowers!
-          </p>
-          <a target="_blank" href="#" style="font-weight: 100; text-align: left; padding-left: 20px; ">
+          <span *ngIf="!isMobile">
+            <br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br />
+            <br />
+            <br />
+          </span>
+          <span *ngIf="isMobile"> <br /><br /><br /> </span>
+          <section class="seo-text container">
+            <p>
+              Riya Orangery is your trusted destination for buying healthy indoor plants,
+              succulents, and cactus online in India. We carefully select plants that are easy to
+              maintain and perfect for homes, offices, and workspaces.
+            </p>
+
+            <p>
+              Our collection includes air-purifying plants, low-light indoor plants, decorative
+              succulents, and unique gifting plants. Every plant is packed securely to ensure safe
+              delivery and long-lasting freshness.
+            </p>
+
+            <p>
+              Whether you are a beginner or a plant lover, Riya Orangery provides expert plant care
+              tips, soil guidance, and support to help your plants thrive.
+            </p>
+          </section>
+          <!--
+          <a
+            target="_blank"
+            href="#"
+            style="font-weight: 100; text-align: left; padding-left: 20px"
+          >
             Read More...
           </a>
+          -->
         </div>
       </div>
     </div>

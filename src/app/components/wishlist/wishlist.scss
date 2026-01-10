@@ -1,0 +1,238 @@
+.wishlist-card {
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  border: 0;
+}
+
+/* ===== Table ===== */
+.wishlist-table {
+  margin-bottom: 0;
+  font-size: 15px;
+}
+
+.wishlist-table thead th {
+  border-bottom: 1px solid #eaeaea;
+  color: #9a9a9a;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 16px;
+}
+
+.wishlist-table tbody tr {
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wishlist-table tbody tr:hover {
+  background-color: #fafafa;
+}
+
+/* ===== Cells ===== */
+.wishlist-table td {
+  vertical-align: middle;
+  padding: 18px 16px;
+  border-top: 1px solid #f1f1f1;
+}
+
+.wishlist-product {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.wishlist-product img {
+  width: 72px;
+  height: 72px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.wishlist-product .info a {
+  font-weight: 600;
+  color: #333;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.wishlist-product .info a:hover {
+  color: #f5593d;
+}
+
+/* ===== Price ===== */
+.wishlist-table td:nth-child(2) {
+  font-weight: 600;
+  color: #555;
+}
+
+/* ===== Stock Badge ===== */
+.badge-success {
+  background-color: #6bd098;
+  font-weight: 500;
+  padding: 6px 10px;
+}
+
+.badge-danger {
+  background-color: #ef8157;
+  font-weight: 500;
+  padding: 6px 10px;
+}
+
+/* ===== Actions ===== */
+.wishlist-table .btn {
+  margin-left: 6px;
+  min-width: 100px;
+}
+
+.wishlist-table .btn-danger {
+  min-width: auto;
+  padding: 8px 10px;
+}
+
+/* ===== Empty State ===== */
+.wishlist-table td[colspan] {
+  padding: 40px 0;
+  color: #9a9a9a;
+  font-size: 16px;
+}
+
+.clickable {
+  cursor: pointer; /* Changes cursor to hand */
+}
+@media (max-width: 768px) {
+  .wishlist-table thead {
+    display: table-header-group;
+  }
+
+  /* Hide ALL headers */
+  .wishlist-table thead th {
+    display: none;
+  }
+
+  /* Show ONLY Product header */
+  .wishlist-table thead th.th-product {
+    display: table-cell;
+    width: 100%;
+    text-align: center;
+    font-weight: 600;
+    padding: 12px;
+  }
+}
+
+.mobile-header {
+  display: none;
+}
+
+.desktop-header {
+  display: table-row;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px) {
+  .table-responsive {
+    overflow-x: hidden;
+  }
+  .desktop-header {
+    display: none !important;
+  }
+
+  .mobile-header {
+    display: table-row !important;
+  }
+  .mobile-headers {
+    display: none !important;
+  }
+  .mobile-header th {
+    display: table-cell !important;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+  }
+
+  .wishlist-table tr {
+    border: 1px solid #eee;
+    border-radius: 16px;
+    padding: 16px 12px;
+    margin-bottom: 20px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    text-align: center;
+  }
+
+  /* Center td content */
+  .wishlist-table td {
+    border: none;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  /* Hide labels (you don’t want Product / Price text) */
+  .wishlist-table td::before {
+    display: none;
+  }
+
+  /* Remove (X) */
+  td[data-label='Remove'] {
+    text-align: right;
+    padding: 0;
+  }
+
+  td[data-label='Remove'] a {
+    font-size: 22px;
+    color: #5bc0de;
+    text-decoration: none;
+  }
+
+  /* Product section */
+  .wishlist-product {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .wishlist-product img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .wishlist-product .info a {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111;
+  }
+
+  /* Price */
+  td[data-label='Price'] {
+    font-size: 15px;
+  }
+
+  /* Button */
+  .btn-add-cart {
+    margin-top: 6px;
+    padding: 8px 18px;
+    border-radius: 20px;
+  }
+}
+
+/* Empty Cart */
+.empty-cart {
+  text-align: center;
+  padding: 80px 20px;
+
+  .empty-cart-icon {
+    font-size: 80px;
+    color: #ddd;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    color: #666;
+    margin-bottom: 30px;
+  }
+}

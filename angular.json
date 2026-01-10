@@ -28,6 +28,7 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "polyfills": ["@angular/localize/init"],
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -35,6 +36,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "CNAME",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": [
@@ -43,13 +54,9 @@
               "public/css/demo.css",
               "public/css/nucleo-icons.css",
               "src/styles.scss"
-              
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+
+            "outputMode": "static"
           },
           "configurations": {
             "production": {

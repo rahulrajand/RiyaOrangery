@@ -1,0 +1,220 @@
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ product_detail.productname }}",
+    "image": {{ product_detail.productimg | json }},
+    "description": "{{ product_detail.shortDescription }}",
+    "brand": {
+      "@type": "Brand",
+      "name": "Riya Orangery"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "INR",
+      "price": "{{ product_detail.productlowprice }}",
+      "availability": "https://schema.org/{{ product_detail.stockAvailable ? 'InStock' : 'OutOfStock' }}"
+    }
+  }
+</script>
+<div class="wrapper">
+  <div class="main">
+    <div class="section">
+      <div class="product-page container">
+        <div class="product-main">
+          <!-- LEFT: Image -->
+          <div class="product-gallery">
+            <!-- Main Product Image -->
+            <div class="main-image">
+              <div class="card page-carousel">
+                <ngb-carousel
+                  #carousel
+                  [interval]="10000"
+                  [wrap]="true"
+                  [keyboard]="true"
+                  [pauseOnHover]="true"
+                >
+                  <ng-template
+                    ngbSlide
+                    *ngFor="let img of product_detail.productimg; let i = index"
+                    [id]="'slide-' + i"
+                  >
+                    <img
+                      [src]="img"
+                      alt="{{ product_detail.productname }} indoor plant image {{ i + 1 }}"
+                    />
+                  </ng-template>
+                </ngb-carousel>
+              </div>
+            </div>
+
+            <!-- Thumbnails -->
+            <div class="thumbnails">
+              <img
+                *ngFor="let img of product_detail.productimg; let i = index"
+                [src]="img"
+                (click)="selectImage(i)"
+                class="thumb-img"
+                alt="{{ product_detail.productname }} thumbnail {{ i + 1 }}"
+              />
+            </div>
+          </div>
+
+          <!-- RIGHT: Details -->
+          <div>
+            <br />
+            <div class="stock-btn" *ngIf="product_detail.stockAvailable === false">
+              Out of stock
+            </div>
+            <div class="discount-btn" *ngIf="product_detail.discount !== 0">
+              {{ product_detail.discount }}%
+            </div>
+            <h1>{{ product_detail.productname }} Indoor Plant</h1>
+            <h2 style="font-size: medium">
+              {{ product_detail.productlabel }}
+            </h2>
+
+            <h3 style="font-size: x-large">
+              ₹{{ product_detail.productlowprice }} - ₹{{ product_detail.producthighprice }}
+            </h3>
+            <h2 style="font-size: medium">
+              {{ product_detail.shortDescription }}
+            </h2>
+            <br />
+            <span *ngIf="product_detail.stockAvailable === true">
+              <h3>
+                Plant Diameter <span *ngIf="diamet"> ({{ this.diamet }}) </span>
+              </h3>
+              <button
+                type="button"
+                class="btn btn-sm m-1"
+                (click)="onDiameterClick($event)"
+                *ngFor="let diameter of diam"
+              >
+                {{ diameter }}
+              </button>
+              <h3>
+                Pot Diameter <span *ngIf="pots"> ({{ this.pots }}) </span>
+              </h3>
+              <button
+                type="button"
+                class="btn btn-sm m-1"
+                (click)="onPotClick($event)"
+                *ngFor="let pott of pot"
+              >
+                {{ pott }}
+              </button>
+              <h3>
+                Soil Type <span *ngIf="soil"> ({{ this.soil }}) </span>
+              </h3>
+              <button
+                type="button"
+                class="btn btn-sm m-1"
+                (click)="onSoilClick($event)"
+                *ngFor="let Soil of Soil"
+              >
+                {{ Soil }}
+              </button>
+
+              <h3
+                style="font-size: x-large"
+                *ngIf="price_range !== 0 && product_detail.stockAvailable === true"
+              >
+                <span *ngIf="product_detail.discount === 0"> ₹{{ price_range }} </span>
+                <span style="text-decoration: line-through" *ngIf="product_detail.discount !== 0">
+                  ₹{{ price_range }}
+                </span>
+                &nbsp;
+                <span *ngIf="product_detail.discount !== 0"> ₹{{ price_range_updated }} </span>
+              </h3>
+            </span>
+
+            <div class="product-actions">
+              <span *ngIf="product_detail.stockAvailable === true">
+                <input type="number" min="1" [(ngModel)]="quantity" class="qty-input" />
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn-add-cart" (click)="AddtoCart(product_detail, $event)">
+                  Add to Cart
+                </button>
+              </span>
+              <span *ngIf="product_detail.stockAvailable === false"> &nbsp;&nbsp;</span>
+              <button class="wishlist-btn" (click)="toggleWishlist(product_detail, $event)">
+                <i
+                  class="fa"
+                  [ngClass]="product_detail.isWishlisted ? 'fa-heart' : 'fa-heart-o'"
+                ></i>
+              </button>
+            </div>
+            <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px">
+              {{ errorMessage }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <ul ngbNav #nav="ngbNav" class="nav nav-tabs">
+          <li [ngbNavItem]="1">
+            <a ngbNavLink style="font-size: medium; font-weight: bold">Description</a>
+            <ng-template ngbNavContent>
+              <h2 style="font-size: medium">
+                <p class="product-description">
+                  {{ product_detail.description }}
+                </p>
+              </h2></ng-template
+            >
+          </li>
+          <li [ngbNavItem]="2">
+            <a ngbNavLink style="font-size: medium; font-weight: bold">Tips</a>
+            <ng-template ngbNavContent>
+              <h2 style="font-size: medium">No Tips yet</h2>
+            </ng-template>
+          </li>
+        </ul>
+
+        <div [ngbNavOutlet]="nav" class="mt-2"></div>
+      </div>
+    </div>
+    <div class="section" #mySection>
+      <div class="container">
+        <div class="" style="text-align: left">
+          <h2 style="font-weight: 600">Related Product</h2>
+        </div>
+      </div>
+      <div class="container front-display-section">
+        <div class="front-display-section-item" *ngFor="let prod of prod_detail">
+          <br />
+          <div
+            class="card"
+            style="margin-right: 20px"
+            [routerLink]="['/Product', prod.productname]"
+          >
+            <div class="card-cover">
+              <img
+                style="max-width: 100%"
+                src="{{ prod.productimg[0] }}"
+                alt="Description of the image"
+              />
+              <div class="stock-btn1" *ngIf="prod.stockAvailable === false">Out of stock</div>
+              <div class="discount-btn1" *ngIf="prod.discount !== 0">{{ prod.discount }}%</div>
+              <button class="wishlist-btn1" (click)="toggleWishlist(prod, $event)">
+                <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
+              </button>
+            </div>
+          </div>
+          <p style="text-align: left; font-size: smaller">{{ prod.productlabel }}</p>
+          <p class="p-title" style="text-align: left">{{ prod.productname }}</p>
+          <p class="p-title" style="text-align: left">
+            <span>&#8377;</span>{{ prod.productlowprice }}-<span>&#8377;</span
+            >{{ prod.producthighprice }}
+          </p>
+          <!-- Star Rating Component
+        <app-star-rating
+          [rating]="prod.productrating"
+          [edit_rate]="1"
+          style="text-align: left"
+        ></app-star-rating>
+        --></div>
+      </div>
+    </div>
+  </div>
+</div>

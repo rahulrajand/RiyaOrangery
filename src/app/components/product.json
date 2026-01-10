@@ -1,0 +1,40 @@
+{
+  "product": [
+    {
+      "productid": "1",
+      "productname": "Monstera Deliciosa",
+      "productlabel": "Indoor ",
+      "productlowprice": 40,
+      "producthighprice": 60,
+      "productprice": [40, 50, 55, 60],
+      "productdisc": 10,
+      "productrating": 4,
+      "productsize": ["2", "4", "6", "8"],
+      "productpotsize": ["2", "4", "6", "8"],
+      "frontpage": true,
+      "productimg": ["./img/monstera1.webp", "./img/monstera2.webp"],
+      "description": "Monstera Deliciosa, often called the Swiss Cheese Plant, is a popular tropical indoor plant known for its large, glossy green leaves with natural splits and holes. These unique leaf patterns help the plant withstand heavy rain and capture sunlight in its native rainforest habitat. Native to Central America, Monstera thrives indoors with bright, indirect light and moderate watering. As it matures, the leaves grow bigger and develop deeper splits, making it a favorite for home décor and modern interiors. 🌱 Why people love Monstera Deliciosa: Easy to care for and beginner-friendly",
+      "shortDescription": "Monstera deliciosa is a popular indoor plant known for its large, glossy green leaves with natural splits. It is easy to care for, grows well in bright indirect light, and adds a bold tropical look to any space. 🌿",
+      "stockAvailable": true,
+      "discount": 0
+    },
+    {
+      "productid": "2",
+      "productname": "String Of Pearls",
+      "productlabel": "Semi-Indoor",
+      "productlowprice": 140,
+      "producthighprice": 360,
+      "productprice": [140, 360],
+      "productdisc": 10,
+      "productrating": 1,
+      "productsize": ["2", "4"],
+      "productpotsize": ["2", "4"],
+      "frontpage": true,
+      "productimg": ["./img/stringofpearl1.webp", "./img/stringofpearl2.webp"],
+      "description": "String of Pearls is a beautiful trailing succulent with small, round, bead-like green leaves that hang gracefully over pots and baskets. It is easy to care for, loves bright indirect light, and adds a soft, elegant touch to indoor spaces—perfect for shelves and hanging planters 🌱",
+      "shortDescription": "String of Pearls is a trailing succulent with round, bead-like green leaves. It’s easy to care for, loves bright indirect light, and looks perfect in hanging pots or shelves 🌿",
+      "stockAvailable": true,
+      "discount": 5
+    }
+  ]
+}

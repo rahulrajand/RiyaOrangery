@@ -1,0 +1,261 @@
+<div class="wrapper">
+  <div class="zoom-wrappers">
+    <div
+      class="page-header page-header-small section-dark"
+      style="background-image: url('img/main-bg.jpg')"
+    ></div>
+    <div class="filter"></div>
+    <div class="content-center zoom-content-prod">
+      <div class="container">
+        <div class="title-brand">
+          <br /><br /><br /><br /><br /><br /><br /><br />
+          <h1>Indoor Plants & Succulents Collection – Riya Orangery</h1>
+          <section class="seo-text container mt-4">
+            <p>
+              Explore our complete collection of indoor plants, succulents, and cactus at Riya
+              Orangery. Each plant is carefully selected to suit Indian homes and offices, requiring
+              minimal maintenance while enhancing indoor beauty.
+            </p>
+
+            <p>
+              Browse plants by category, size, and price to find the perfect match for your space.
+              From air-purifying indoor plants to decorative succulents, our collection is ideal for
+              beginners and plant enthusiasts alike.
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="section">
+      <div class="container mt-5">
+        <div class="row">
+          <!-- FILTER SIDEBAR -->
+          <aside class="col-lg-3 d-none d-lg-block">
+            <!-- CATEGORY FILTER -->
+            <div class="filter-box mb-3">
+              <div class="filter-header" (click)="toggleFilterBox('category')">
+                <h5 style="font-weight: bold">Filter By Category</h5>
+
+                <i
+                  class="nc-icon"
+                  [ngClass]="filterToggle.category ? 'nc-minimal-up' : 'nc-minimal-down'"
+                >
+                </i>
+              </div>
+              <h6 style="font-size: x-small">{{ category_selected }}</h6>
+
+              <div class="filter-content form-check" *ngIf="filterToggle.category">
+                <label class="form-check-label" (click)="onCategoryClick($event)"
+                  ><h6>All Category</h6></label
+                >
+                <div *ngFor="let c of categories">
+                  <label class="form-check-label" (click)="onCategoryClick($event)">
+                    {{ c.name }}
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- PRICE FILTER -->
+            <div class="filter-box mb-3">
+              <div class="filter-header" (click)="toggleFilterBox('plant-Diameter')">
+                <h5 style="font-weight: bold">Plant Diameter</h5>
+                <i
+                  class="nc-icon"
+                  [ngClass]="filterToggle['plant-Diameter'] ? 'nc-minimal-up' : 'nc-minimal-down'"
+                >
+                </i>
+              </div>
+              <h6 style="font-size: x-small">{{ plantDM_selected }}</h6>
+              <div class="filter-content" *ngIf="filterToggle['plant-Diameter']">
+                <button
+                  type="button"
+                  class="btn btn-sm m-1"
+                  (click)="onDiameterClick($event)"
+                  *ngFor="let diam_val of diam"
+                >
+                  {{ diam_val }}
+                </button>
+              </div>
+            </div>
+
+            <!-- COLOR FILTER -->
+            <div class="filter-box mb-3">
+              <div class="filter-header" (click)="toggleFilterBox('price')">
+                <h5 style="font-weight: bold">Price</h5>
+                <i
+                  class="nc-icon"
+                  [ngClass]="filterToggle.price ? 'nc-minimal-up' : 'nc-minimal-down'"
+                >
+                </i>
+              </div>
+              <h6 style="font-size: x-small">{{ plantPR_selected }}</h6>
+
+              <div class="filter-content" *ngIf="filterToggle.price">
+                <nouislider
+                  class="slider slider-info"
+                  [connect]="[false, true, false]"
+                  [min]="this.minprices"
+                  [max]="this.maxprices"
+                  [step]="10"
+                  [(ngModel)]="doubleSlider"
+                  [tooltips]="[false, false]"
+                  (ngModelChange)="onPriceClick($event)"
+                ></nouislider>
+                <span class="price-range"
+                  >Price: ₹{{ doubleSlider[0] }} - ₹{{ doubleSlider[1] }}</span
+                >
+              </div>
+            </div>
+          </aside>
+
+          <!-- PRODUCTS -->
+          <main class="col-lg-9">
+            <!-- MOBILE FILTER BUTTON -->
+            <div class="d-flex">
+              <button class="btn mb-3 d-lg-none" (click)="toggleMobileFilters()">☰ Filter</button>
+              <div ngbDropdown class="d-inline-block dropdown ml-auto">
+                <button
+                  class="btn mb-3 nav-link"
+                  id="dropdownBasic1"
+                  type="button"
+                  ngbDropdownToggle
+                >
+                  {{ Dropdown_select }}
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-primary">
+                  <label
+                    class="dropdown-item"
+                    *ngFor="let option of Dropdown_Option"
+                    (click)="SortBy(option)"
+                    >{{ option }}</label
+                  >
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 col-md-4 mb-4" *ngFor="let p of product_detail">
+                <a
+                  class="card"
+                  [routerLink]="['/Product', p.productname]"
+                  aria-label="View {{ p.productname }} indoor plant"
+                >
+                  <div class="img-wrapper">
+                    <img
+                      [src]="p.productimg[0]"
+                      class="card-img-top product-image"
+                      alt="{{ p.productname }} indoor plant"
+                    />
+
+                    <div class="stock-btn" *ngIf="p.stockAvailable === false">Out of stock</div>
+                    <div class="discount-btn" *ngIf="p.discount !== 0">{{ p.discount }}%</div>
+
+                    <!-- Wishlist Button -->
+                    <button class="wishlist-btn" (click)="toggleWishlist(p, $event)">
+                      <i class="fa" [ngClass]="p.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
+                    </button>
+                  </div>
+                  <div class="card-body text-center">
+                    <p style="text-align: left; font-size: x-large">{{ p.productname }}</p>
+                    <p style="text-align: left; font-size: large">
+                      <span>&#8377;</span>{{ p.productlowprice }}-<span>&#8377;</span
+                      >{{ p.producthighprice }}
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+      <div class="mobile-filter-panel" [class.open]="mobileFiltersOpen">
+        <!-- HEADER WITH EXIT -->
+        <div class="mobile-filter-header">
+          <h5 class="mb-0">Filters</h5>
+          <button class="btn btn-default" (click)="toggleMobileFilters()">✕</button>
+        </div>
+
+        <!-- FILTER CONTENT -->
+        <div class="p-3">
+          <div class="filter-box mb-3">
+            <div class="filter-header" (click)="toggleFilterBox('category')">
+              <h5 style="font-weight: bold">Filter By Category</h5>
+              <i
+                class="nc-icon"
+                [ngClass]="filterToggle.category ? 'nc-minimal-up' : 'nc-minimal-down'"
+              >
+              </i>
+            </div>
+            <h6 style="font-size: x-small">{{ category_selected }}</h6>
+
+            <div class="filter-content form-check" *ngIf="filterToggle.category">
+              <label class="form-check-label" (click)="onCategoryClick($event)"
+                ><h6>All Category</h6></label
+              >
+              <div *ngFor="let c of categories">
+                <label class="form-check-label" (click)="onCategoryClick($event)">
+                  {{ c.name }}
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- PRICE FILTER -->
+          <div class="filter-box mb-3">
+            <div class="filter-header" (click)="toggleFilterBox('plant-Diameter')">
+              <h5 style="font-weight: bold">Plant Diameter</h5>
+              <i
+                class="nc-icon"
+                [ngClass]="filterToggle['plant-Diameter'] ? 'nc-minimal-up' : 'nc-minimal-down'"
+              >
+              </i>
+            </div>
+            <h6 style="font-size: x-small">{{ plantDM_selected }}</h6>
+            <div class="filter-content" *ngIf="filterToggle['plant-Diameter']">
+              <button
+                type="button"
+                class="btn btn-sm m-1"
+                (click)="onDiameterClick($event)"
+                *ngFor="let diam_val of diam"
+              >
+                {{ diam_val }}
+              </button>
+            </div>
+          </div>
+
+          <!-- COLOR FILTER -->
+          <div class="filter-box mb-3">
+            <div class="filter-header" (click)="toggleFilterBox('price')">
+              <h5 style="font-weight: bold">Price</h5>
+              <i
+                class="nc-icon"
+                [ngClass]="filterToggle.price ? 'nc-minimal-up' : 'nc-minimal-down'"
+              >
+              </i>
+            </div>
+            <h6 style="font-size: x-small">{{ plantPR_selected }}</h6>
+
+            <div class="filter-content" *ngIf="filterToggle.price">
+              <nouislider
+                class="slider slider-info"
+                [connect]="[false, true, false]"
+                [min]="this.minprices"
+                [max]="this.maxprices"
+                [step]="10"
+                [(ngModel)]="doubleSlider"
+                [tooltips]="[false, false]"
+                (click)="onPriceClick($event)"
+              ></nouislider>
+              <span class="price-range"
+                >Price: ₹{{ doubleSlider[0] }} - ₹{{ doubleSlider[1] }}</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,269 @@
+<div class="wrapper">
+  <div class="zoom-wrappers">
+    <div
+      class="page-header page-header-small section-dark"
+      style="background-image: url('img/main-bg.jpg')"
+    ></div>
+    <div class="filter"></div>
+    <div class="content-center zoom-content-prod">
+      <div class="container">
+        <div class="title-brand">
+          <br /><br /><br /><br /><br /><br /><br /><br />
+          <h1 class="presentation-titles">Cart</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main">
+    <div class="section">
+      <div class="container cart-container">
+        <!-- Empty Cart Message -->
+        <div *ngIf="cartItems.length === 0" class="empty-cart">
+          <div class="empty-cart-icon">
+            <i class="fa fa-shopping-cart"></i>
+          </div>
+          <h2>Your cart is currently empty.</h2>
+          <button class="btn" routerLink="/collection/all">Return to Shop</button>
+          <div style="margin-top: 20px; font-weight: bold">
+            <h6>If you have invoice PDF. send it to the below Whatsapp</h6>
+            <h6
+              (click)="sendPdfToWhatsApp()"
+              style="cursor: pointer; text-align: center"
+              class="whatsapp-btn1"
+            >
+              Click Me
+            </h6>
+          </div>
+        </div>
+
+        <!-- Cart Items Table -->
+        <div *ngIf="cartItems.length > 0" class="cart-content">
+          <div class="cart-table-wrapper">
+            <table class="cart-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of cartItems">
+                  <td class="product-remove">
+                    <button
+                      type="button"
+                      class="remove-btn"
+                      (click)="removeItem(item)"
+                      aria-label="Remove item from cart"
+                    >
+                      ×
+                    </button>
+                  </td>
+                  <td class="product-info">
+                    <div class="product-details">
+                      <a style="cursor: pointer" [routerLink]="['/Product', item.productname]">
+                        <img
+                          [src]="item.productimg"
+                          [alt]="item.productname"
+                          class="product-image"
+                        />
+                        <div class="product-name-details">
+                          <h4>{{ item.productname }}</h4>
+                          <p class="product-attributes">
+                            <span *ngIf="item.productsize">Size: {{ item.productsize }}</span>
+                            <span *ngIf="item.productpotsize">
+                              | Pot: {{ item.productpotsize }}</span
+                            >
+                            <span *ngIf="item.productsoil"> | Soil: {{ item.productsoil }}</span>
+                          </p>
+                        </div>
+                      </a>
+                    </div>
+                  </td>
+                  <td class="product-price">
+                    <span *ngIf="item.discount > 0" class="original-price">
+                      ₹{{ item.productprice }}
+                    </span>
+                    <span class="discounted-price"> ₹{{ item.productdisprice }} </span>
+                    <span *ngIf="item.discount > 0" class="discount-badge">
+                      -{{ item.discount }}%
+                    </span>
+                  </td>
+                  <td class="product-quantity">
+                    <input
+                      type="number"
+                      min="1"
+                      [value]="item.productcount"
+                      (change)="updateQuantity(item, $event)"
+                      class="qty-input"
+                    />
+                  </td>
+                  <td class="product-subtotal">₹{{ item.producttotal | number : '1.2-2' }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Cart Actions -->
+          <div class="cart-actions">
+            <button class="btn-clear-cart" (click)="clearCart()">Clear Cart</button>
+            <button class="btn-continue-shopping" routerLink="/collection/all">
+              Continue Shopping
+            </button>
+          </div>
+
+          <!-- Personal Info and Cart Totals -->
+          <div class="checkout-section">
+            <!-- Personal Information -->
+            <div class="personal-info">
+              <h3>Personal Information</h3>
+              <form>
+                <div class="form-group">
+                  <label for="customerName">Full Name *</label>
+                  <input
+                    type="text"
+                    id="customerName"
+                    [(ngModel)]="customerName"
+                    name="customerName"
+                    (blur)="validateName()"
+                    [class.error]="nameError"
+                    class="form-control"
+                    placeholder="Enter your full name"
+                    required
+                  />
+                  <span class="error-message" *ngIf="nameError">{{ nameError }}</span>
+                </div>
+                <div class="form-group">
+                  <label for="email">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    [(ngModel)]="email"
+                    name="email"
+                    (blur)="validateEmail()"
+                    [class.error]="emailError"
+                    class="form-control"
+                    placeholder="Enter your email"
+                    required
+                  />
+                  <span class="error-message" *ngIf="emailError">{{ emailError }}</span>
+                </div>
+                <div class="form-group">
+                  <label for="phone">Phone Number *</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    [(ngModel)]="phone"
+                    name="phone"
+                    (blur)="validatePhone()"
+                    [class.error]="phoneError"
+                    class="form-control"
+                    placeholder="Enter your 10-digit phone number"
+                    maxlength="10"
+                    required
+                  />
+                  <span class="error-message" *ngIf="phoneError">{{ phoneError }}</span>
+                </div>
+                <div class="form-group">
+                  <label for="address">Address *</label>
+                  <textarea
+                    id="address"
+                    [(ngModel)]="address"
+                    name="address"
+                    (blur)="validateAddress()"
+                    [class.error]="addressError"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Enter your complete address"
+                    required
+                  ></textarea>
+                  <span class="error-message" *ngIf="addressError">{{ addressError }}</span>
+                </div>
+                <div class="form-row">
+                  <div class="form-group half">
+                    <label for="city">City *</label>
+                    <input
+                      type="text"
+                      id="city"
+                      [(ngModel)]="city"
+                      name="city"
+                      (blur)="validateCity()"
+                      [class.error]="cityError"
+                      class="form-control"
+                      placeholder="City"
+                      required
+                    />
+                    <span class="error-message" *ngIf="cityError">{{ cityError }}</span>
+                  </div>
+                  <div class="form-group half">
+                    <label for="state">State *</label>
+                    <input
+                      type="text"
+                      id="state"
+                      [(ngModel)]="state"
+                      name="state"
+                      (blur)="validateState()"
+                      [class.error]="stateError"
+                      class="form-control"
+                      placeholder="State"
+                      required
+                    />
+                    <span class="error-message" *ngIf="stateError">{{ stateError }}</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="pincode">Pincode *</label>
+                  <input
+                    type="text"
+                    id="pincode"
+                    [(ngModel)]="pincode"
+                    name="pincode"
+                    (blur)="validatePincode()"
+                    [class.error]="pincodeError"
+                    class="form-control"
+                    placeholder="Enter 6-digit pincode"
+                    maxlength="6"
+                    required
+                  />
+                  <span class="error-message" *ngIf="pincodeError">{{ pincodeError }}</span>
+                </div>
+              </form>
+            </div>
+
+            <!-- Cart Totals -->
+            <div class="cart-totals">
+              <h3>Cart Totals</h3>
+              <div class="totals-row">
+                <span>Subtotal:</span>
+                <span class="amount">₹{{ subtotal | number : '1.2-2' }}</span>
+              </div>
+              <div class="totals-row">
+                <span>Shipping:</span>
+                <span class="amount">₹{{ shippingCost | number : '1.2-2' }}</span>
+              </div>
+              <div class="totals-row">
+                <span>Shipping For Soil:</span>
+                <span class="amount">₹{{ shippingSoilCost | number : '1.2-2' }}</span>
+              </div>
+              <div class="totals-row total">
+                <span>Total:</span>
+                <span class="amount">₹{{ total | number : '1.2-2' }}</span>
+              </div>
+              <button class="btn-checkout" [disabled]="!isFormValid()" (click)="downloadPDF()">
+                Download as PDF
+              </button>
+              <div style="margin-top: 20px; font-weight: bold">
+                <h6>Download this PDF and send it to the below Whatsapp</h6>
+                <a (click)="sendPdfToWhatsApp()" style="cursor: pointer" class="whatsapp-btn">
+                  Click Me</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

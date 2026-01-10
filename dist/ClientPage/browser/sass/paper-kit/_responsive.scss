@@ -458,27 +458,70 @@
 
     .dropdown.show .dropdown-menu,
     .dropdown .dropdown-menu{
-        background-color: transparent;
-        border: 0;
+        background-color: $white-color;
+        border: 0 none;
+        border-radius: $border-radius-extreme;
         transition: none;
         -webkit-box-shadow: none;
         box-shadow: none;
         width: auto;
-        border-radius: 0;
+        display: block;
+        margin-top: 10px;
+        padding: 0px;
+        position: absolute;
 
+        .dropdown-item{
+            color: $font-color;
+            font-size: $font-size-base;
+            padding: 10px 45px 10px 15px;
+            clear: both;
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+            &:hover{
+                color: $white-color;
+            }
 
-        .dropdown-item:hover,
-        .dropdown-item:focus{
-            background-color: transparent;
-            border-radius:0;
+           img{
+               margin-top: -3px;
+           }
+
+        }
+        .dropdown-item a:focus{
+            outline: 0 !important;
         }
 
-        .dropdown-item a{
+        .btn-group.select &{
+            min-width: 100%;
+        }
 
-            &:hover,
-            &:focus{
-                color: $default-states-color;
-            }
+        .dropdown-item:first-child a,
+        .dropdown-item:first-child{
+           border-top-left-radius: $border-radius-extreme;
+           border-top-right-radius: $border-radius-extreme;
+        }
+
+        .dropdown-item:last-child a,
+        .dropdown-item:last-child{
+            border-bottom-left-radius: $border-radius-extreme;
+            border-bottom-right-radius: $border-radius-extreme;
+        }
+
+        .select & .dropdown-item:first-child a{
+            border-radius: 0;
+            border-bottom: 0 none;
+        }
+
+        .dropdown-item a:hover,
+        .dropdown-item a:focus{
+            color: $white-color;
+            opacity: 1;
+            text-decoration: none;
+
+        }
+        .dropdown-item:hover,
+        .dropdown-item:focus{
+            background-color: $default-color;
         }
 
         &:before,
@@ -498,7 +541,6 @@
     }
 
     .navbar-translate{
-        justify-content: space-between;
         display: flex;
         align-items: center;
         width: 100%;
@@ -666,19 +708,59 @@
             border-radius: 0;
 
 
-            .dropdown-item:hover,
-            .dropdown-item:focus{
-                background-color: transparent;
-                border-radius:0;
+            .dropdown-item{
+            color: $font-color;
+            font-size: $font-size-base;
+            padding: 10px 45px 10px 15px;
+            clear: both;
+            white-space: nowrap;
+            width: 100%;
+            display: block;
+            &:hover{
+                color: $white-color;
             }
 
-            .dropdown-item a{
+           img{
+               margin-top: -3px;
+           }
 
-                &:hover,
-                &:focus{
-                    color: $default-states-color;
-                }
-            }
+        }
+        .dropdown-item a:focus{
+            outline: 0 !important;
+        }
+
+        .btn-group.select &{
+            min-width: 100%;
+        }
+
+        .dropdown-item:first-child a,
+        .dropdown-item:first-child{
+           border-top-left-radius: $border-radius-extreme;
+           border-top-right-radius: $border-radius-extreme;
+        }
+
+        .dropdown-item:last-child a,
+        .dropdown-item:last-child{
+            border-bottom-left-radius: $border-radius-extreme;
+            border-bottom-right-radius: $border-radius-extreme;
+        }
+
+        .select & .dropdown-item:first-child a{
+            border-radius: 0;
+            border-bottom: 0 none;
+        }
+
+        .dropdown-item a:hover,
+        .dropdown-item a:focus{
+            color: $white-color;
+            opacity: 1;
+            text-decoration: none;
+
+        }
+        .dropdown-item:hover,
+        .dropdown-item:focus{
+            background-color: $default-color;
+        }
 
             &:before,
             &:after{

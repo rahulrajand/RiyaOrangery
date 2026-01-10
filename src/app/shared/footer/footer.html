@@ -1,24 +1,35 @@
 <footer class="footer" style="background-color: rgb(87, 65, 39)">
-  <div class="container">
-    <div class="row">
-      <nav class="footer-nav">
-        <ul>
-          <li><a>Riya Orangery</a></li>
-          <li><a>About Us</a></li>
-          <li><a>Contact Us</a></li>
-        </ul>
-      </nav>
-    </div>
-  </div>
-  <hr />
   <div class="container footer-section">
     <div class="footer-section-item">
-      <h6>40, East Car Street, Chinnamanur, Theni District - 625515</h6>
+      <label
+        placement="top"
+        ngbPopover="We Not only Deliver Indoor plants, We deliver Peace in Small Containers."
+        popoverTitle="Riya Orangery"
+        style="cursor: pointer"
+      >
+        <h6>About Us</h6>
+      </label>
     </div>
-    <div class="footer-section-item"><h6>7373829090<br/>rahulrajand@gmail.com</h6></div>
+    <div class="footer-section-item">
+      <label
+        placement="top"
+        [ngbPopover]="contactTpl"
+        popoverTitle="Contact Us"
+        style="cursor: pointer"
+      >
+        <h6>Contact Us</h6>
+      </label>
+      <h6></h6>
+    </div>
     <div class="footer-section-item"></div>
     <div class="footer-section-item">
       <h6>Let's create the garden of your dream</h6>
     </div>
   </div>
 </footer>
+
+<ng-template #contactTpl>
+  Mobile : 7373829090 <br />
+  Address : Chinnamanur-625515,<br />
+  Tamil Nadu, India
+</ng-template>

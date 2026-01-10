@@ -1,0 +1,146 @@
+<div class="wrapper">
+  <div class="zoom-wrappers">
+    <div
+      class="page-header page-header-small section-dark"
+      style="background-image: url('img/main-bg.jpg')"
+    ></div>
+    <div class="filter"></div>
+    <div class="content-center zoom-content-prod">
+      <div class="container">
+        <div class="title-brand">
+          <br /><br /><br /><br /><br /><br /><br /><br />
+          <h1 class="presentation-titles">Wishlist</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="card wishlist-card">
+        <!-- Empty Cart Message -->
+        <div *ngIf="wishlist.length === 0" class="empty-cart">
+          <div class="empty-cart-icon">
+            <i class="nc-icon nc-favourite-28"></i>
+          </div>
+          <h2>Your Wishlist is currently empty.</h2>
+          <button class="btn" routerLink="/collection/all">Return to Shop</button>
+        </div>
+        <div class="card-body" *ngIf="wishlist.length > 0">
+          <div class="table-responsive">
+            <table class="table wishlist-table">
+              <thead>
+                <tr class="mobile-header">
+                  <th colspan="5" style="background-color: rgb(249, 242, 233)">Product</th>
+                </tr>
+
+                <!-- DESKTOP HEADER -->
+                <tr class="desktop-header" style="background-color: rgb(249, 242, 233)">
+                  <!--
+                  <th>
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          [checked]="allSelected"
+                          (change)="toggleAll($event)"
+                        />
+                        <span class="form-check-sign"></span>
+                      </label>
+                    </div>
+                  </th>
+                  -->
+                  <th></th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Status</th>
+                  <th class="text-right"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let item of wishlist">
+                  <!--
+                  <td class="mobile-headers">
+                    <div class="wishlist-product">
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            value=""
+                            [(ngModel)]="item.selected"
+                            (change)="checkIfAllSelected()"
+                          />
+                          <span class="form-check-sign"></span>
+                        </label>
+                      </div>
+                    </div>
+                  </td>
+                -->
+                  <td data-label="Remove">
+                    <div class="wishlist-product">
+                      <button
+                        type="button"
+                        class="clickable"
+                        aria-label="Remove from wishlist"
+                        (click)="removelist(item, $event)"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  </td>
+                  <td data-label="Product">
+                    <div class="wishlist-product">
+                      <img [src]="item.productimg[0]" alt="{{ item.productname }} indoor plant" />
+                      <div class="info">
+                        <a [routerLink]="['/Product/', item.productname]">
+                          {{ item.productname }}
+                        </a>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-label="Price">
+                    <div class="wishlist-product">
+                      <label style="font-weight: bold"> ₹{{ item.productprice }}</label>
+                    </div>
+                  </td>
+                  <td data-label="Status">
+                    <div class="wishlist-product">
+                      <label
+                        *ngIf="item.stockAvailable !== true"
+                        style="background-color: red; font-weight: bold; color: white"
+                      >
+                        Out of stock</label
+                      >
+                      <label
+                        *ngIf="item.stockAvailable === true"
+                        style="background-color: green; font-weight: bold; color: white"
+                      >
+                        In Stock</label
+                      >
+                    </div>
+                  </td>
+                  <!--
+                  <td data-label="Action">
+                    <div class="wishlist-product">
+                      <button class="btn-add-cart" (click)="AddtoCart(item, $event)">
+                        Add to Cart
+                      </button>
+                    </div>
+                  </td>
+                  -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--
+      <div>
+        <button class="btn-add-cart mobile-headers">Add Selected to Cart</button> &nbsp;&nbsp;
+        <button class="btn-add-cart">Add All to Cart</button>
+      </div>
+    --></div>
+  </div>
+</div>

@@ -1,4 +1,5 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-scroll-to-top',
@@ -7,17 +8,23 @@ import { Component, HostListener } from '@angular/core';
   styleUrl: './scroll-to-top.scss',
 })
 export class ScrollToTop {
- isVisible = false;
+  isVisible = false;
+
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.isVisible = window.scrollY > 300;
+    if (isPlatformBrowser(this.platformId)) {
+      this.isVisible = window.scrollY > 300;
+    }
   }
 
   scrollToTop() {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
   }
 }
