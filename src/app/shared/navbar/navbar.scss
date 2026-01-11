@@ -1,0 +1,325 @@
+/* ===== Modern Navbar ===== */
+.navbar-modern {
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+  padding: 12px 0;
+  transition: all 0.3s ease;
+
+  &.navbar-scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+  }
+
+  &.navbar-product-page {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* ===== Brand ===== */
+.navbar-left-group {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+}
+
+.navbar-brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateX(3px);
+
+    .navbar-brand {
+      color: #6aa84f;
+    }
+  }
+
+  .brand-logo {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(106, 168, 79, 0.2));
+  }
+
+  .navbar-brand {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: white;
+    margin: 0;
+    transition: color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.navbar-scrolled,
+.navbar-product-page {
+  .navbar-brand {
+    color: #2d3748 !important;
+    text-shadow: none;
+  }
+}
+
+/* ===== Flora Dropdown ===== */
+.flora-dropdown {
+  margin-left: 0;
+
+  .flora-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: linear-gradient(135deg, #6aa84f 0%, #5a9440 100%);
+    color: white;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(106, 168, 79, 0.3);
+
+    i {
+      font-size: 0.9rem;
+
+      &.fa-chevron-down {
+        font-size: 0.75rem;
+      }
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #5a9440 0%, #4a7d33 100%);
+      box-shadow: 0 6px 16px rgba(106, 168, 79, 0.4);
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.dropdown-menu-modern {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  padding: 10px 0;
+  margin-top: 10px;
+  background: white;
+
+  .dropdown-item {
+    padding: 12px 24px;
+    font-weight: 500;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i {
+      color: #6aa84f;
+      font-size: 0.85rem;
+    }
+
+    &:hover {
+      background: linear-gradient(135deg, #f0f9f4 0%, #e8f5e9 100%);
+      color: #2d3748;
+      padding-left: 28px;
+
+      i {
+        color: #5a9440;
+      }
+    }
+
+    &:active {
+      background: #e8f5e9;
+    }
+  }
+}
+
+/* ===== Navbar Toggle ===== */
+.navbar-toggler {
+  border: none;
+  padding: 8px;
+  margin-left: auto;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .navbar-toggler-bar {
+    display: block;
+    width: 26px;
+    height: 3px;
+    background: #6aa84f;
+    border-radius: 2px;
+    margin: 5px 0;
+    transition: all 0.3s ease;
+  }
+
+  &:hover .navbar-toggler-bar {
+    background: #5a9440;
+  }
+}
+
+/* ===== Nav Items ===== */
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .nav-item {
+    margin: 0;
+
+    .nav-icon-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      color: #4a5568;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 12px;
+
+      .icon-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+          font-size: 1.4rem;
+          color: #6aa84f;
+          transition: all 0.3s ease;
+        }
+
+        .badge-count {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+          background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+          color: white;
+          font-size: 0.7rem;
+          font-weight: 700;
+          padding: 3px 7px;
+          border-radius: 50%;
+          min-width: 20px;
+          height: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(252, 129, 129, 0.4);
+          animation: badgePulse 2s ease-in-out infinite;
+        }
+      }
+
+      .nav-label {
+        font-weight: 600;
+        color: #2d3748;
+      }
+
+      &:hover {
+        .icon-wrapper {
+          transform: scale(1.1);
+
+          i {
+            color: #5a9440;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes badgePulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ===== Mobile Styles ===== */
+@media (max-width: 991px) {
+  .navbar-translate {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .navbar-brand-wrapper {
+    .brand-logo {
+      height: 35px;
+    }
+
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+  }
+
+  .flora-dropdown {
+    margin-left: 10px;
+
+    .flora-link {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .navbar-collapse {
+    background: white;
+    border-radius: 16px;
+    margin-top: 15px;
+    padding: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+
+    .navbar-nav {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+
+      .nav-item {
+        width: 100%;
+
+        .nav-icon-link {
+          justify-content: flex-start;
+          width: 100%;
+          padding: 12px 16px;
+
+          .icon-wrapper {
+            i {
+              font-size: 1.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-brand-wrapper {
+    .brand-logo {
+      height: 30px;
+    }
+
+    .navbar-brand {
+      font-size: 1.1rem;
+    }
+  }
+
+  .flora-dropdown {
+    .flora-link {
+      padding: 6px 12px;
+      font-size: 0.85rem;
+      gap: 6px;
+    }
+  }
+}

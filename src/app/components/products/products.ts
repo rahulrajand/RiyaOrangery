@@ -25,6 +25,9 @@ export class Products {
   diam: string[] = [];
   pot: string[] = ['No Pot'];
   Soil: string[] = ['Without Soil', 'With Soil'];
+  diamet: string = '';
+  soil: string = '';
+  pots: string = '';
 
   constructor(
     private componentservice: ComponentsService,
@@ -40,6 +43,25 @@ export class Products {
     });
   }
   loadPlantData(id: string | null) {
+    console.log('Loading product data for id:', id);
+    this.product_detail = null as any;
+    this.selectedImage = '';
+    this.diam = [];
+    this.pot = [];
+    this.prod_detail = [];
+
+    this.diamet = '';
+    this.pots = '';
+    this.soil = '';
+    this.price_range = 0;
+    this.price_range_updated = 0;
+    this.full_product_detail = null as any;
+    this.prod_detail = null as any;
+    this.errorMessage = '';
+    this.diam = [];
+    this.pot = ['No Pot'];
+    this.Soil = ['Without Soil', 'With Soil'];
+
     this.product_detail = this.componentsService.getProductByname(id!) as ProductDetails;
     this.title.setTitle(`${this.product_detail.productname} Indoor Plant | Riya Orangery`);
 
@@ -95,10 +117,6 @@ export class Products {
     this.carousel.select(`slide-${i}`);
   }
 
-  diamet: string = '';
-  soil: string = '';
-  pots: string = '';
-
   public updatePriceRange() {
     console.log('called');
     const max = this.diamet.match(/\d+/g)?.map(Number) || 0;
@@ -109,18 +127,18 @@ export class Products {
     );
     console.log(this.pots);
     switch (this.pots) {
-      case '3 INCHES':
+      case '3 inches':
         this.price_range += 20;
         this.price_range_updated += 20;
         break;
-      case '4 INCHES':
+      case '4 inches':
         this.price_range += 25;
         this.price_range_updated += 25;
         break;
       default:
         break;
     }
-    if (this.soil == 'WITH SOIL') {
+    if (this.soil == 'With Soil') {
       this.price_range += 15;
       this.price_range_updated += 15;
     }

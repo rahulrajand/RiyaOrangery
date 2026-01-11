@@ -170,7 +170,7 @@ export class Collection {
     const clickedElement = category.target as HTMLLabelElement;
     console.log(clickedElement.innerText);
     this.category_selected =
-      clickedElement.innerText === 'all' || clickedElement.innerText === 'ALL CATEGORY'
+      clickedElement.innerText === 'all' || clickedElement.innerText === 'All Category'
         ? ''
         : clickedElement.innerText;
 
@@ -194,6 +194,7 @@ export class Collection {
 
   toggleWishlist(product: any, event: Event) {
     event.stopPropagation(); // prevents routerLink navigation
+    event.preventDefault(); // prevents link navigation
     product.isWishlisted = !product.isWishlisted;
     this.componentservice.updateWishlist(product);
   }

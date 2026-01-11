@@ -26,26 +26,28 @@
           <div class="product-gallery">
             <!-- Main Product Image -->
             <div class="main-image">
-              <div class="card page-carousel">
-                <ngb-carousel
-                  #carousel
-                  [interval]="10000"
-                  [wrap]="true"
-                  [keyboard]="true"
-                  [pauseOnHover]="true"
+              <ngb-carousel
+                #carousel
+                class="product-carousel"
+                [interval]="0"
+                [wrap]="true"
+                [keyboard]="true"
+                [showNavigationArrows]="true"
+                [showNavigationIndicators]="false"
+              >
+                <ng-template
+                  ngbSlide
+                  *ngFor="let img of product_detail.productimg; let i = index"
+                  [id]="'slide-' + i"
                 >
-                  <ng-template
-                    ngbSlide
-                    *ngFor="let img of product_detail.productimg; let i = index"
-                    [id]="'slide-' + i"
-                  >
+                  <div class="carousel-image-wrapper">
                     <img
                       [src]="img"
                       alt="{{ product_detail.productname }} indoor plant image {{ i + 1 }}"
                     />
-                  </ng-template>
-                </ngb-carousel>
-              </div>
+                  </div>
+                </ng-template>
+              </ngb-carousel>
             </div>
 
             <!-- Thumbnails -->
@@ -61,92 +63,135 @@
           </div>
 
           <!-- RIGHT: Details -->
-          <div>
-            <br />
-            <div class="stock-btn" *ngIf="product_detail.stockAvailable === false">
-              Out of stock
+          <div class="product-details">
+            <div class="product-badges">
+              <span
+                class="badge badge-out-of-stock"
+                *ngIf="product_detail.stockAvailable === false"
+              >
+                <i class="fa fa-ban"></i> Out of Stock
+              </span>
+              <span class="badge badge-discount" *ngIf="product_detail.discount !== 0">
+                <i class="fa fa-tag"></i> {{ product_detail.discount }}% OFF
+              </span>
             </div>
-            <div class="discount-btn" *ngIf="product_detail.discount !== 0">
-              {{ product_detail.discount }}%
-            </div>
-            <h1>{{ product_detail.productname }} Indoor Plant</h1>
-            <h2 style="font-size: medium">
-              {{ product_detail.productlabel }}
-            </h2>
 
-            <h3 style="font-size: x-large">
-              ₹{{ product_detail.productlowprice }} - ₹{{ product_detail.producthighprice }}
-            </h3>
-            <h2 style="font-size: medium">
+            <h1 class="product-title">{{ product_detail.productname }}</h1>
+            <div class="product-label">
+              <i class="fa fa-leaf"></i> {{ product_detail.productlabel }}
+            </div>
+
+            <div class="product-price-range">
+              <span class="currency">₹</span>{{ product_detail.productlowprice }} -
+              <span class="currency">₹</span>{{ product_detail.producthighprice }}
+            </div>
+
+            <p class="product-short-description">
               {{ product_detail.shortDescription }}
-            </h2>
-            <br />
-            <span *ngIf="product_detail.stockAvailable === true">
-              <h3>
-                Plant Diameter <span *ngIf="diamet"> ({{ this.diamet }}) </span>
-              </h3>
-              <button
-                type="button"
-                class="btn btn-sm m-1"
-                (click)="onDiameterClick($event)"
-                *ngFor="let diameter of diam"
-              >
-                {{ diameter }}
-              </button>
-              <h3>
-                Pot Diameter <span *ngIf="pots"> ({{ this.pots }}) </span>
-              </h3>
-              <button
-                type="button"
-                class="btn btn-sm m-1"
-                (click)="onPotClick($event)"
-                *ngFor="let pott of pot"
-              >
-                {{ pott }}
-              </button>
-              <h3>
-                Soil Type <span *ngIf="soil"> ({{ this.soil }}) </span>
-              </h3>
-              <button
-                type="button"
-                class="btn btn-sm m-1"
-                (click)="onSoilClick($event)"
-                *ngFor="let Soil of Soil"
-              >
-                {{ Soil }}
-              </button>
+            </p>
+            <div class="product-options" *ngIf="product_detail.stockAvailable === true">
+              <div class="option-group">
+                <label class="option-label">
+                  <i class="fa fa-expand"></i> Plant Diameter
+                  <span class="selected-value" *ngIf="diamet">: {{ this.diamet }}</span>
+                </label>
+                <div class="option-buttons">
+                  <button
+                    type="button"
+                    class="option-btn"
+                    [class.active]="diamet === diameter"
+                    (click)="onDiameterClick($event)"
+                    *ngFor="let diameter of diam"
+                  >
+                    {{ diameter }}
+                  </button>
+                </div>
+              </div>
 
-              <h3
-                style="font-size: x-large"
+              <div class="option-group">
+                <label class="option-label">
+                  <i class="fa fa-clone"></i> Pot Diameter
+                  <span class="selected-value" *ngIf="pots">: {{ this.pots }}</span>
+                </label>
+                <div class="option-buttons">
+                  <button
+                    type="button"
+                    class="option-btn"
+                    [class.active]="pots === pott"
+                    (click)="onPotClick($event)"
+                    *ngFor="let pott of pot"
+                  >
+                    {{ pott }}
+                  </button>
+                </div>
+              </div>
+
+              <div class="option-group">
+                <label class="option-label">
+                  <i class="fa fa-tint"></i> Soil Type
+                  <span class="selected-value" *ngIf="soil">: {{ this.soil }}</span>
+                </label>
+                <div class="option-buttons">
+                  <button
+                    type="button"
+                    class="option-btn"
+                    [class.active]="soil === Soil"
+                    (click)="onSoilClick($event)"
+                    *ngFor="let Soil of Soil"
+                  >
+                    {{ Soil }}
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="final-price"
                 *ngIf="price_range !== 0 && product_detail.stockAvailable === true"
               >
-                <span *ngIf="product_detail.discount === 0"> ₹{{ price_range }} </span>
-                <span style="text-decoration: line-through" *ngIf="product_detail.discount !== 0">
-                  ₹{{ price_range }}
-                </span>
-                &nbsp;
-                <span *ngIf="product_detail.discount !== 0"> ₹{{ price_range_updated }} </span>
-              </h3>
-            </span>
+                <div class="price-display">
+                  <span class="price-label">Final Price:</span>
+                  <div class="price-values">
+                    <span class="original-price" *ngIf="product_detail.discount !== 0">
+                      ₹{{ price_range }}
+                    </span>
+                    <span class="current-price">
+                      ₹{{ product_detail.discount !== 0 ? price_range_updated : price_range }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div class="product-actions">
-              <span *ngIf="product_detail.stockAvailable === true">
-                <input type="number" min="1" [(ngModel)]="quantity" class="qty-input" />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <button class="btn-add-cart" (click)="AddtoCart(product_detail, $event)">
-                  Add to Cart
+              <div class="quantity-selector" *ngIf="product_detail.stockAvailable === true">
+                <label class="qty-label">Quantity</label>
+                <input type="number" min="1" max="99" [(ngModel)]="quantity" class="qty-input" />
+              </div>
+
+              <div class="action-buttons">
+                <button
+                  class="btn-add-cart"
+                  *ngIf="product_detail.stockAvailable === true"
+                  (click)="AddtoCart(product_detail, $event)"
+                >
+                  <i class="fa fa-shopping-cart"></i> Add to Cart
                 </button>
-              </span>
-              <span *ngIf="product_detail.stockAvailable === false"> &nbsp;&nbsp;</span>
-              <button class="wishlist-btn" (click)="toggleWishlist(product_detail, $event)">
-                <i
-                  class="fa"
-                  [ngClass]="product_detail.isWishlisted ? 'fa-heart' : 'fa-heart-o'"
-                ></i>
-              </button>
+                <button
+                  class="btn-wishlist"
+                  (click)="toggleWishlist(product_detail, $event)"
+                  [class.active]="product_detail.isWishlisted"
+                >
+                  <i
+                    class="fa"
+                    [ngClass]="product_detail.isWishlisted ? 'fa-heart' : 'fa-heart-o'"
+                  ></i>
+                  <span>{{ product_detail.isWishlisted ? 'Wishlisted' : 'Add to Wishlist' }}</span>
+                </button>
+              </div>
             </div>
-            <div class="error-message" *ngIf="errorMessage" style="color: red; margin-top: 10px">
-              {{ errorMessage }}
+
+            <div class="error-alert" *ngIf="errorMessage">
+              <i class="fa fa-exclamation-circle"></i> {{ errorMessage }}
             </div>
           </div>
         </div>
@@ -184,7 +229,7 @@
         </div>
       </div>
     </div>
-    <div class="section">
+    <div class="section" *ngIf="prod_detail && prod_detail.length > 0">
       <div class="container">
         <div class="" style="text-align: left">
           <h2 style="font-weight: 600">Related Product</h2>

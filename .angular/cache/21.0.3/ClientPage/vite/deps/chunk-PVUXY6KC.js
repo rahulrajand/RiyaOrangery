@@ -2,11 +2,11 @@ import {
   NgbCollapse
 } from "./chunk-AVBI2634.js";
 import {
-  NgbConfig
-} from "./chunk-J2ZJW23Y.js";
-import {
   takeUntilDestroyed
 } from "./chunk-WY64GS5E.js";
+import {
+  NgbConfig
+} from "./chunk-J2ZJW23Y.js";
 import {
   isString
 } from "./chunk-VOE7HPUZ.js";
@@ -763,4 +763,4 @@ export {
   NgbAccordionDirective,
   NgbAccordionModule
 };
-//# sourceMappingURL=chunk-KVMIMU7A.js.map
+//# sourceMappingURL=chunk-PVUXY6KC.js.map

@@ -17,119 +17,69 @@
   <div class="section">
     <div class="container">
       <div class="card wishlist-card">
-        <!-- Empty Cart Message -->
-        <div *ngIf="wishlist.length === 0" class="empty-cart">
-          <div class="empty-cart-icon">
-            <i class="nc-icon nc-favourite-28"></i>
+        <!-- Empty Wishlist Message -->
+        <div *ngIf="wishlist.length === 0" class="empty-wishlist">
+          <div class="empty-wishlist-icon">
+            <i class="fa fa-heart-o"></i>
           </div>
           <h2>Your Wishlist is currently empty.</h2>
-          <button class="btn" routerLink="/collection/all">Return to Shop</button>
+          <p class="empty-wishlist-subtitle">Save your favorite plants here!</p>
+          <button class="btn-return-shop" routerLink="/collection/all">
+            <i class="fa fa-leaf"></i> Return to Shop
+          </button>
         </div>
         <div class="card-body" *ngIf="wishlist.length > 0">
           <div class="table-responsive">
             <table class="table wishlist-table">
               <thead>
-                <tr class="mobile-header">
-                  <th colspan="5" style="background-color: rgb(249, 242, 233)">Product</th>
-                </tr>
-
-                <!-- DESKTOP HEADER -->
-                <tr class="desktop-header" style="background-color: rgb(249, 242, 233)">
-                  <!--
-                  <th>
-                    <div class="form-check">
-                      <label class="form-check-label">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          [checked]="allSelected"
-                          (change)="toggleAll($event)"
-                        />
-                        <span class="form-check-sign"></span>
-                      </label>
-                    </div>
-                  </th>
-                  -->
-                  <th></th>
+                <tr class="desktop-header">
+                  <th class="action-col"></th>
                   <th>Product</th>
                   <th>Price</th>
-                  <th>Status</th>
-                  <th class="text-right"></th>
+                  <th>Availability</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr *ngFor="let item of wishlist">
-                  <!--
-                  <td class="mobile-headers">
-                    <div class="wishlist-product">
-                      <div class="form-check">
-                        <label class="form-check-label">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            value=""
-                            [(ngModel)]="item.selected"
-                            (change)="checkIfAllSelected()"
-                          />
-                          <span class="form-check-sign"></span>
-                        </label>
-                      </div>
-                    </div>
-                  </td>
-                -->
-                  <td data-label="Remove">
-                    <div class="wishlist-product">
-                      <button
-                        type="button"
-                        class="clickable"
-                        aria-label="Remove from wishlist"
-                        (click)="removelist(item, $event)"
-                      >
-                        ×
-                      </button>
-                    </div>
+                  <td class="action-col">
+                    <button
+                      type="button"
+                      class="remove-btn"
+                      aria-label="Remove from wishlist"
+                      (click)="removelist(item, $event)"
+                    >
+                      <i class="fa fa-times"></i>
+                    </button>
                   </td>
                   <td data-label="Product">
                     <div class="wishlist-product">
                       <img [src]="item.productimg[0]" alt="{{ item.productname }} indoor plant" />
-                      <div class="info">
-                        <a [routerLink]="['/Product/', item.productname]">
+                      <div class="product-info">
+                        <a [routerLink]="['/Product/', item.productname]" class="product-name">
                           {{ item.productname }}
                         </a>
                       </div>
                     </div>
                   </td>
                   <td data-label="Price">
-                    <div class="wishlist-product">
-                      <label style="font-weight: bold"> ₹{{ item.productprice }}</label>
+                    <div class="price-display">
+                      <span class="price-amount">₹{{ item.productprice }}</span>
                     </div>
                   </td>
-                  <td data-label="Status">
-                    <div class="wishlist-product">
-                      <label
-                        *ngIf="item.stockAvailable !== true"
-                        style="background-color: red; font-weight: bold; color: white"
-                      >
-                        Out of stock</label
-                      >
-                      <label
-                        *ngIf="item.stockAvailable === true"
-                        style="background-color: green; font-weight: bold; color: white"
-                      >
-                        In Stock</label
-                      >
-                    </div>
+                  <td data-label="Availability">
+                    <span
+                      class="stock-badge"
+                      [class.in-stock]="item.stockAvailable"
+                      [class.out-of-stock]="!item.stockAvailable"
+                    >
+                      <i
+                        class="fa"
+                        [ngClass]="item.stockAvailable ? 'fa-check-circle' : 'fa-ban'"
+                      ></i>
+                      {{ item.stockAvailable ? 'In Stock' : 'Out of Stock' }}
+                    </span>
                   </td>
-                  <!--
-                  <td data-label="Action">
-                    <div class="wishlist-product">
-                      <button class="btn-add-cart" (click)="AddtoCart(item, $event)">
-                        Add to Cart
-                      </button>
-                    </div>
-                  </td>
-                  -->
                 </tr>
               </tbody>
             </table>

@@ -2,11 +2,11 @@ import {
   NgTemplateOutlet
 } from "./chunk-3SJ4UDZF.js";
 import {
-  NgbConfig
-} from "./chunk-J2ZJW23Y.js";
-import {
   takeUntilDestroyed
 } from "./chunk-WY64GS5E.js";
+import {
+  NgbConfig
+} from "./chunk-J2ZJW23Y.js";
 import {
   isDefined,
   ngbRunTransition,
@@ -939,4 +939,4 @@ export {
   NgbNavOutlet,
   NgbNavModule
 };
-//# sourceMappingURL=chunk-CZ76ZTSJ.js.map
+//# sourceMappingURL=chunk-W7XUCVIU.js.map

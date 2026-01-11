@@ -23,16 +23,15 @@
             <i class="fa fa-shopping-cart"></i>
           </div>
           <h2>Your cart is currently empty.</h2>
-          <button class="btn" routerLink="/collection/all">Return to Shop</button>
-          <div style="margin-top: 20px; font-weight: bold">
-            <h6>If you have invoice PDF. send it to the below Whatsapp</h6>
-            <h6
-              (click)="sendPdfToWhatsApp()"
-              style="cursor: pointer; text-align: center"
-              class="whatsapp-btn1"
-            >
-              Click Me
-            </h6>
+          <p class="empty-cart-subtitle">Looks like you haven't added any plants yet!</p>
+          <button class="btn-return-shop" routerLink="/collection/all">
+            <i class="fa fa-leaf"></i> Return to Shop
+          </button>
+          <div class="whatsapp-section">
+            <p class="whatsapp-title">Have an invoice PDF?</p>
+            <button class="btn-whatsapp" (click)="sendPdfToWhatsApp()">
+              <i class="fa fa-whatsapp"></i> Send via WhatsApp
+            </button>
           </div>
         </div>
 
@@ -58,7 +57,7 @@
                       (click)="removeItem(item)"
                       aria-label="Remove item from cart"
                     >
-                      ×
+                      <i class="fa fa-times"></i>
                     </button>
                   </td>
                   <td class="product-info">
@@ -72,24 +71,30 @@
                         <div class="product-name-details">
                           <h4>{{ item.productname }}</h4>
                           <p class="product-attributes">
-                            <span *ngIf="item.productsize">Size: {{ item.productsize }}</span>
-                            <span *ngIf="item.productpotsize">
-                              | Pot: {{ item.productpotsize }}</span
+                            <span *ngIf="item.productsize"
+                              ><i class="fa fa-expand"></i> {{ item.productsize }}</span
                             >
-                            <span *ngIf="item.productsoil"> | Soil: {{ item.productsoil }}</span>
+                            <span *ngIf="item.productpotsize"
+                              ><i class="fa fa-clone"></i> {{ item.productpotsize }}</span
+                            >
+                            <span *ngIf="item.productsoil"
+                              ><i class="fa fa-tint"></i> {{ item.productsoil }}</span
+                            >
                           </p>
                         </div>
                       </a>
                     </div>
                   </td>
                   <td class="product-price">
-                    <span *ngIf="item.discount > 0" class="original-price">
-                      ₹{{ item.productprice }}
-                    </span>
-                    <span class="discounted-price"> ₹{{ item.productdisprice }} </span>
-                    <span *ngIf="item.discount > 0" class="discount-badge">
-                      -{{ item.discount }}%
-                    </span>
+                    <div class="price-container">
+                      <span *ngIf="item.discount > 0" class="original-price">
+                        ₹{{ item.productprice }}
+                      </span>
+                      <span class="current-price"> ₹{{ item.productdisprice }} </span>
+                      <span *ngIf="item.discount > 0" class="discount-badge">
+                        <i class="fa fa-tag"></i> -{{ item.discount }}%
+                      </span>
+                    </div>
                   </td>
                   <td class="product-quantity">
                     <input
@@ -108,9 +113,11 @@
 
           <!-- Cart Actions -->
           <div class="cart-actions">
-            <button class="btn-clear-cart" (click)="clearCart()">Clear Cart</button>
+            <button class="btn-clear-cart" (click)="clearCart()">
+              <i class="fa fa-trash"></i> Clear Cart
+            </button>
             <button class="btn-continue-shopping" routerLink="/collection/all">
-              Continue Shopping
+              <i class="fa fa-arrow-left"></i> Continue Shopping
             </button>
           </div>
 
@@ -252,13 +259,13 @@
                 <span class="amount">₹{{ total | number : '1.2-2' }}</span>
               </div>
               <button class="btn-checkout" [disabled]="!isFormValid()" (click)="downloadPDF()">
-                Download as PDF
+                <i class="fa fa-download"></i> Download as PDF
               </button>
-              <div style="margin-top: 20px; font-weight: bold">
-                <h6>Download this PDF and send it to the below Whatsapp</h6>
-                <a (click)="sendPdfToWhatsApp()" style="cursor: pointer" class="whatsapp-btn">
-                  Click Me</a
-                >
+              <div class="whatsapp-section-checkout">
+                <p class="whatsapp-instruction">Download this PDF and send it via WhatsApp</p>
+                <button class="btn-whatsapp" (click)="sendPdfToWhatsApp()">
+                  <i class="fa fa-whatsapp"></i> Send via WhatsApp
+                </button>
               </div>
             </div>
           </div>

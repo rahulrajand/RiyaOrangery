@@ -1,35 +1,95 @@
-<footer class="footer" style="background-color: rgb(87, 65, 39)">
-  <div class="container footer-section">
-    <div class="footer-section-item">
-      <label
-        placement="top"
-        ngbPopover="We Not only Deliver Indoor plants, We deliver Peace in Small Containers."
-        popoverTitle="Riya Orangery"
-        style="cursor: pointer"
-      >
-        <h6>About Us</h6>
-      </label>
+<footer class="footer-modern">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-column">
+        <div class="footer-brand">
+          <img src="img/riyaorangery_nobg.png" alt="Riya Orangery" class="footer-logo" />
+          <h4>Riya Orangery</h4>
+        </div>
+        <p class="footer-tagline">
+          We don't only deliver indoor plants, we deliver peace in small containers.
+        </p>
+        <div class="footer-social">
+          <a
+            href="https://www.instagram.com/__riya_orangery_/"
+            target="_blank"
+            rel="noopener"
+            aria-label="Riya Orangery Instagram"
+            class="social-link"
+          >
+            <i class="fa fa-instagram"></i>
+          </a>
+          <a
+            href="https://wa.me/917373829090"
+            class="whatsapp-float"
+            target="_blank"
+            rel="noopener"
+            class="social-link"
+            aria-label="WhatsApp"
+          >
+            <i class="fa fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-column">
+        <h5 class="footer-title">Quick Links</h5>
+        <ul class="footer-links">
+          <li>
+            <a routerLink="/"><i class="fa fa-leaf"></i> Home</a>
+          </li>
+          <li>
+            <a routerLink="/collection/all"><i class="fa fa-th"></i> Shop All</a>
+          </li>
+          <li>
+            <a routerLink="/cart"><i class="fa fa-shopping-cart"></i> Cart</a>
+          </li>
+          <li>
+            <a routerLink="/wishlist"><i class="fa fa-heart"></i> Wishlist</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h5 class="footer-title">Contact Us</h5>
+        <ul class="footer-contact">
+          <li>
+            <i class="fa fa-phone"></i>
+            <span>7373829090</span>
+          </li>
+          <li>
+            <i class="fa fa-map-marker"></i>
+            <span>Chinnamanur-625515,<br />Tamil Nadu, India</span>
+          </li>
+          <li>
+            <i class="fa fa-clock-o"></i>
+            <span>Mon - Sat: 9AM - 6PM</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h5 class="footer-title">Let's Create</h5>
+        <p class="footer-dream">The garden of your dreams</p>
+        <div class="newsletter">
+          <p class="newsletter-text">Stay updated with our latest plants and offers</p>
+        </div>
+      </div>
     </div>
-    <div class="footer-section-item">
-      <label
-        placement="top"
-        [ngbPopover]="contactTpl"
-        popoverTitle="Contact Us"
-        style="cursor: pointer"
-      >
-        <h6>Contact Us</h6>
-      </label>
-      <h6></h6>
-    </div>
-    <div class="footer-section-item"></div>
-    <div class="footer-section-item">
-      <h6>Let's create the garden of your dream</h6>
+
+    <div class="footer-bottom">
+      <p>&copy; {{ currentYear }} Riya Orangery. All rights reserved.</p>
+      <p class="footer-credit">Made with <i class="fa fa-heart"></i> for plant lovers</p>
     </div>
   </div>
-</footer>
 
-<ng-template #contactTpl>
-  Mobile : 7373829090 <br />
-  Address : Chinnamanur-625515,<br />
-  Tamil Nadu, India
-</ng-template>
+  <!-- Scroll to Top Button -->
+  <button
+    class="scroll-to-top"
+    [class.visible]="showScrollTop"
+    (click)="scrollToTop()"
+    aria-label="Scroll to top"
+  >
+    <i class="fa fa-arrow-up"></i>
+  </button>
+</footer>

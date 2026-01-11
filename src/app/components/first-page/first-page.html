@@ -13,7 +13,8 @@
             Healthy Indoor Plants for Homes & Offices
           </h2>
           <br /><br /><br /><br />
-          <button type="button" class="btn text-center" (click)="scrollToSection()">
+          <button type="button" class="btn-explore" (click)="scrollToSection()">
+            <i class="fa fa-leaf"></i>
             Explore Indoor Plants
           </button>
         </div>
@@ -26,141 +27,131 @@
     </div>
   </div>
   <div class="main">
-    <div class="section" style="background-color: rgb(255, 248, 240)">
+    <div class="section features-section">
       <div class="container info-section">
-        <div class="vertical-rule grid-item">
-          <div>
-            <ng-icon name="heroArchiveBox" style="font-size: 80px"></ng-icon>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <ng-icon name="heroArchiveBox"></ng-icon>
           </div>
-          <br />
-          <div>
-            <h6>Secure Packing</h6>
-          </div>
-          <br />
+          <h6>Secure Packing</h6>
+          <p>Safe delivery guaranteed</p>
         </div>
-        <div class="vertical-rule_1 grid-item">
-          <div>
-            <ng-icon name="heroPercentBadge" style="font-size: 80px"></ng-icon>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <ng-icon name="heroPercentBadge"></ng-icon>
           </div>
-          <br />
-          <div>
-            <h6>Best Discount</h6>
-          </div>
-          <br />
+          <h6>Best Discount</h6>
+          <p>Great prices on quality plants</p>
         </div>
-        <div class="vertical-rule grid-item">
-          <div>
-            <i class="nc-icon nc-satisfied" style="font-size: 80px"></i>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="nc-icon nc-satisfied"></i>
           </div>
-          <br />
-          <div>
-            <h6>Customer Satisfaction</h6>
-          </div>
-          <br />
+          <h6>Customer Satisfaction</h6>
+          <p>Your happiness is our priority</p>
         </div>
-        <div class="grid-item">
-          <div>
-            <i class="nc-icon nc-sun-fog-29" style="font-size: 80px"></i>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="nc-icon nc-sun-fog-29"></i>
           </div>
-          <br />
-          <div>
-            <h6>Best Quality</h6>
-          </div>
+          <h6>Best Quality</h6>
+          <p>Premium healthy plants</p>
         </div>
       </div>
     </div>
-  </div>
-  <div class="section" #mySection>
-    <div class="container">
-      <div style="text-align: center">
-        <h3>Our Shop</h3>
-      </div>
-      <div class="title-uppercase blockquote" style="text-align: center">
-        <h3 style="font-weight: 600">Best Sellers</h3>
-      </div>
-    </div>
-    <div class="container front-display-section">
-      <div class="front-display-section-item" *ngFor="let prod of product_detail">
-        <br />
-        <div class="card" style="margin-right: 20px" [routerLink]="['/Product', prod.productname]">
-          <div class="card-cover">
-            <img
-              class="product-image"
-              style="max-width: 100%"
-              src="{{ prod.productimg[0] }}"
-              alt="{{ prod.productname }} indoor plant"
-            />
-            <div class="stock-btn" *ngIf="prod.stockAvailable === false">Out of stock</div>
-            <div class="discount-btn" *ngIf="prod.discount !== 0">{{ prod.discount }}%</div>
-            <button class="wishlist-btn" (click)="toggleWishlist(prod, $event)">
-              <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
-            </button>
-          </div>
+    <div class="section products-section" #mySection>
+      <div class="container">
+        <div class="section-header">
+          <p class="section-subtitle">Our Shop</p>
+          <h2 class="section-title">Best Sellers</h2>
+          <div class="title-underline"></div>
         </div>
-        <p style="text-align: left; font-size: smaller">{{ prod.productlabel }}</p>
-        <p class="p-title" style="text-align: left">{{ prod.productname }}</p>
-        <p class="p-title" style="text-align: left">
-          <span>&#8377;</span>{{ prod.productlowprice }}-<span>&#8377;</span
-          >{{ prod.producthighprice }}
-        </p>
-        <!-- Star Rating Component
+      </div>
+      <div class="container">
+        <div class="front-display-section">
+          <div class="product-card-wrapper" *ngFor="let prod of product_detail">
+            <div class="product-card" [routerLink]="['/Product', prod.productname]">
+              <div class="product-image-wrapper">
+                <img
+                  class="product-image"
+                  src="{{ prod.productimg[0] }}"
+                  alt="{{ prod.productname }} indoor plant"
+                />
+                <div class="stock-badge" *ngIf="prod.stockAvailable === false">
+                  <i class="fa fa-ban"></i> Out of stock
+                </div>
+                <div class="discount-badge" *ngIf="prod.discount !== 0">
+                  <i class="fa fa-tag"></i> {{ prod.discount }}% OFF
+                </div>
+                <button class="wishlist-btn" (click)="toggleWishlist(prod, $event)">
+                  <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
+                </button>
+              </div>
+              <div class="product-details">
+                <span class="product-category">{{ prod.productlabel }}</span>
+                <h4 class="product-name">{{ prod.productname }}</h4>
+                <div class="product-price">
+                  <span class="price-currency">₹</span>{{ prod.productlowprice }} -
+                  <span class="price-currency">₹</span>{{ prod.producthighprice }}
+                </div>
+              </div>
+
+              <!-- Star Rating Component
         <app-star-rating
           [rating]="prod.productrating"
           [edit_rate]="1"
           style="text-align: left"
         ></app-star-rating>
          -->
-      </div>
-    </div>
-    <div style="text-align: center">
-      <button type="button" class="btn text-center" [routerLink]="'../collection/all'">
-        More Products
-      </button>
-    </div>
-  </div>
-  <div class="section" style="background-color: rgb(252, 239, 224)">
-    <div class="container front-knowledge-section">
-      <div class="front-knowledge-section-item">
-        <div>
-          <h2 style="text-align: left">Plant Care Knowledge Base</h2>
+            </div>
+          </div>
         </div>
-        <div>
-          <h2 style="font-weight: 600; text-align: left">
-            We will teach you how to care for potted plants and flowers!
-          </h2>
-        </div>
-        <div>
-          <img style="max-width: 100%" src="./img/front1.jpeg" alt="Description of the image" />
+        <div class="more-products-wrapper">
+          <button type="button" class="btn-more-products" [routerLink]="'../collection/all'">
+            <i class="fa fa-th"></i>
+            More Products
+            <i class="fa fa-arrow-right"></i>
+          </button>
         </div>
       </div>
-      <div class="front-knowledge-section-item">
-        <div>
-          <span *ngIf="!isMobile">
-            <br /><br /><br /><br /><br /><br /><br /><br /><br />
-            <br />
-            <br />
-            <br />
-          </span>
-          <span *ngIf="isMobile"> <br /><br /><br /> </span>
-          <section class="seo-text container">
-            <p>
-              Riya Orangery is your trusted destination for buying healthy indoor plants,
-              succulents, and cactus online in India. We carefully select plants that are easy to
-              maintain and perfect for homes, offices, and workspaces.
-            </p>
+    </div>
+    <div class="section knowledge-section">
+      <div class="container front-knowledge-section">
+        <div class="knowledge-image-wrapper">
+          <div class="knowledge-header">
+            <p class="knowledge-subtitle">ABOUT RIYA ORANGERY</p>
+            <h2 class="knowledge-title">Your Trusted Online Store for Healthy Indoor Plants</h2>
+          </div>
+          <div class="knowledge-image">
+            <img src="./img/front1.jpeg" alt="Plant care guide" />
+          </div>
+        </div>
+        <div class="knowledge-content">
+          <div>
+            <span *ngIf="!isMobile">
+              <br /><br /><br /><br /><br /><br /><br /><br /><br />
+              <br />
+            </span>
+            <span *ngIf="isMobile"> <br /><br /><br /> </span>
+            <section class="seo-text container">
+              <p>
+                Riya Orangery is your trusted destination for buying healthy indoor plants,
+                succulents, and cactus online in India. We carefully select plants that are easy to
+                maintain and perfect for homes, offices, and workspaces.
+              </p>
 
-            <p>
-              Our collection includes air-purifying plants, low-light indoor plants, decorative
-              succulents, and unique gifting plants. Every plant is packed securely to ensure safe
-              delivery and long-lasting freshness.
-            </p>
+              <p>
+                Our collection includes air-purifying plants, low-light indoor plants, decorative
+                succulents, and unique gifting plants. Every plant is packed securely to ensure safe
+                delivery and lasting freshness.
+              </p>
 
-            <p>
-              Whether you are a beginner or a plant lover, Riya Orangery provides expert plant care
-              tips, soil guidance, and support to help your plants thrive.
-            </p>
-          </section>
-          <!--
+              <p>
+                Along with quality plants, we also provide expert care tips and soil guidance to
+                help your plants grow beautifully.
+              </p>
+            </section>
+            <!--
           <a
             target="_blank"
             href="#"
@@ -168,7 +159,49 @@
           >
             Read More...
           </a>
-          -->
+          --></div>
+        </div>
+      </div>
+    </div>
+    <div class="section knowledge-section knowledge-section-reverse">
+      <div class="container front-knowledge-section front-knowledge-section-reverse">
+        <div class="knowledge-header">
+          <p class="knowledge-subtitle">PLANT CARE KNOWLEDGE BASE</p>
+          <h2 class="knowledge-title">Simple Plant Care Tips for Healthy Indoor Plants</h2>
+        </div>
+        <div class="knowledge-image-wrapper">
+          <div class="knowledge-image">
+            <img src="./img/front1.jpeg" alt="Plant care guide" />
+          </div>
+        </div>
+        <div class="knowledge-content">
+          <div>
+            <section class="seo-text container">
+              <p>
+                We help you understand how to care for potted plants and flowers with ease. From
+                watering schedules and sunlight needs to soil selection and repotting tips, our
+                guidance is designed to keep your plants healthy and thriving.
+              </p>
+
+              <p>
+                Whether you’re growing indoor plants, succulents, or cactus, you’ll find
+                easy-to-follow care tips suitable for homes, offices, and workspaces.
+              </p>
+
+              <p>
+                Our plant care knowledge is beginner-friendly and practical, helping you build
+                confidence and enjoy long-lasting greenery.
+              </p>
+            </section>
+            <!--
+          <a
+            target="_blank"
+            href="#"
+            style="font-weight: 100; text-align: left; padding-left: 20px"
+          >
+            Read More...
+          </a>
+          --></div>
         </div>
       </div>
     </div>

@@ -20,6 +20,8 @@ export class Navbar {
   private sidebarVisible: boolean;
   public cartItemCount: number = 0;
   public WishlistCount: number = 0;
+  public isScrolled: boolean = false;
+  public isProductPage: boolean = false;
 
   public flora_detail: string[] = [];
 
@@ -53,6 +55,9 @@ export class Navbar {
       }
 
       this.enableColorOnScroll = currentRoute.snapshot.data['colorOnScroll'] ?? false;
+
+      // Check if current route is product page
+      this.isProductPage = this.router.url.includes('/Product/');
     });
     this.componentsService.wishlist$.subscribe((wishlist) => {
       this.WishlistCount = wishlist.length || 0;
@@ -64,6 +69,9 @@ export class Navbar {
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('resize', () => {
         this.checkScreen();
+      });
+      window.addEventListener('scroll', () => {
+        this.isScrolled = window.scrollY > 50;
       });
     }
   }

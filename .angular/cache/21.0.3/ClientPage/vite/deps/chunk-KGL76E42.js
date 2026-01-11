@@ -3,11 +3,11 @@ import {
   isPlatformBrowser
 } from "./chunk-3SJ4UDZF.js";
 import {
-  NgbConfig
-} from "./chunk-J2ZJW23Y.js";
-import {
   takeUntilDestroyed
 } from "./chunk-WY64GS5E.js";
+import {
+  NgbConfig
+} from "./chunk-J2ZJW23Y.js";
 import {
   ngbCompleteTransition,
   ngbRunTransition,
@@ -810,4 +810,4 @@ export {
   NgbSlideEventSource,
   NgbCarouselModule
 };
-//# sourceMappingURL=chunk-XQPHYO7C.js.map
+//# sourceMappingURL=chunk-KGL76E42.js.map

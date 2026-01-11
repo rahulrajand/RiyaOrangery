@@ -35,6 +35,7 @@ export class App {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+
     const navbar: HTMLElement = this.element.nativeElement.children[0].children[0];
     const setNavbar = () => {
       const isProductPage = false;

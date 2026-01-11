@@ -1,32 +1,34 @@
 <nav
-  class="navbar navbar-expand-lg fixed-top navbar-transparent nav"
+  class="navbar navbar-expand-lg fixed-top navbar-modern"
+  [ngClass]="{ 'navbar-scrolled': isScrolled, 'navbar-product-page': isProductPage }"
   [attr.color-on-scroll]="enableColorOnScroll ? '500' : null"
 >
   <div class="container">
     <div class="navbar-translate">
-      <img
-        style="max-width: 5%"
-        src="img/riyaorangery_nobg.png"
-        alt="Riya Orangery logo – Indoor plants and succulents"
-      />
-      <a class="navbar-brand" routerLink="/">Riya Orangery</a>
-      <div ngbDropdown class="d-inline-block dropdown">
-        <a class="navbar-brand" id="dropdownBasic1" ngbDropdownToggle style="cursor: pointer"
-          >Flora</a
-        >
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown">
-          <a
-            class="dropdown-item"
-            *ngFor="let flora of flora_detail"
-            (click)="ChangePage(flora)"
-            style="cursor: pointer"
-            >{{ flora }}</a
-          >
+      <div class="navbar-left-group">
+        <div class="navbar-brand-wrapper" routerLink="/">
+          <img
+            class="brand-logo"
+            src="img/riyaorangery_nobg.png"
+            alt="Riya Orangery logo – Indoor plants and succulents"
+          />
+          <span class="navbar-brand">Riya Orangery</span>
+        </div>
+        <div ngbDropdown class="d-inline-block dropdown flora-dropdown">
+          <a class="flora-link" id="dropdownBasic1" ngbDropdownToggle>
+            <i class="fa fa-leaf"></i>
+            Flora
+          </a>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-modern">
+            <a class="dropdown-item" *ngFor="let flora of flora_detail" (click)="ChangePage(flora)">
+              <i class="fa fa-leaf"></i>
+              {{ flora }}
+            </a>
+          </div>
         </div>
       </div>
       <button
         class="navbar-toggler navbar-burger"
-        style="margin-left: auto"
         type="button"
         data-toggle="collapse"
         data-target="#navbarToggler"
@@ -44,53 +46,32 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link nav-icon-link"
             rel="tooltip"
             title="Cart"
             data-placement="bottom"
             routerLink="/cart"
-            style="position: relative; cursor: pointer"
           >
-            <i class="nc-icon nc-bag-16"></i>
-            <p class="d-lg-none">Cart&nbsp;</p>
-            <span
-              class="cart-count"
-              *ngIf="cartItemCount !== 0 && !isMobile"
-              style="position: absolute; top: 0px; right: 0px"
-              >{{ cartItemCount }}</span
-            >
-            <span
-              class="cart-count"
-              *ngIf="cartItemCount !== 0 && isMobile"
-              style="position: absolute"
-              >{{ cartItemCount }}</span
-            >
+            <div class="icon-wrapper">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="badge-count" *ngIf="cartItemCount !== 0">{{ cartItemCount }}</span>
+            </div>
+            <span class="d-lg-none nav-label">Cart</span>
           </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link"
+            class="nav-link nav-icon-link"
             rel="tooltip"
             title="Wishlist"
             data-placement="bottom"
-            target="_blank"
             (click)="goToWishlist()"
-            style="position: relative"
           >
-            <i class="nc-icon nc-favourite-28"></i>
-            <p class="d-lg-none">Wishlist&nbsp;</p>
-            <span
-              class="cart-count"
-              *ngIf="WishlistCount !== 0 && !isMobile"
-              style="position: absolute; top: 0px; right: 0px"
-              >{{ WishlistCount }}</span
-            >
-            <span
-              class="cart-count"
-              *ngIf="WishlistCount !== 0 && isMobile"
-              style="position: absolute"
-              >{{ WishlistCount }}</span
-            >
+            <div class="icon-wrapper">
+              <i class="fa fa-heart"></i>
+              <span class="badge-count" *ngIf="WishlistCount !== 0">{{ WishlistCount }}</span>
+            </div>
+            <span class="d-lg-none nav-label">Wishlist</span>
           </a>
         </li>
       </ul>

@@ -88,6 +88,7 @@ export class FirstPage implements OnInit {
 
   toggleWishlist(product: any, event: Event) {
     event.stopPropagation(); // prevents routerLink navigation
+    event.preventDefault(); // prevents link navigation
     product.isWishlisted = !product.isWishlisted;
     this.componentservice.updateWishlist(product);
   }
