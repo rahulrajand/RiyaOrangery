@@ -42,7 +42,10 @@
                 >
                   <div class="carousel-image-wrapper">
                     <img
-                      [src]="img"
+                      src="./img/Plants/400/{{ img }}"
+                      srcset="./img/Plants/400/{{ img }} 400w, ./img/Plants/600/{{ img }} 600w, ./img/Plants/1200/{{ img }} 1200w"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      loading="lazy"
                       alt="{{ product_detail.productname }} indoor plant image {{ i + 1 }}"
                     />
                   </div>
@@ -54,7 +57,10 @@
             <div class="thumbnails">
               <img
                 *ngFor="let img of product_detail.productimg; let i = index"
-                [src]="img"
+                src="./img/Plants/400/{{ img }}"
+                srcset="./img/Plants/400/{{ img }} 400w, ./img/Plants/600/{{ img }} 600w, ./img/Plants/1200/{{ img }} 1200w"
+                sizes="(max-width: 768px) 100vw, 33vw"
+                loading="lazy"
                 (click)="selectImage(i)"
                 class="thumb-img"
                 alt="{{ product_detail.productname }} thumbnail {{ i + 1 }}"
@@ -71,12 +77,18 @@
               >
                 <i class="fa fa-ban"></i> Out of Stock
               </span>
-              <span class="badge badge-discount" *ngIf="product_detail.discount !== 0">
+              <span
+                class="badge badge-discount"
+                *ngIf="product_detail.discount !== 0 && product_detail.stockAvailable !== false"
+              >
                 <i class="fa fa-tag"></i> {{ product_detail.discount }}% OFF
               </span>
             </div>
 
             <h1 class="product-title">{{ product_detail.productname }}</h1>
+            <div class="product-scientific-name" *ngIf="product_detail.productsciname">
+              <i class="fa fa-flask"></i> {{ product_detail.productsciname }}
+            </div>
             <div class="product-label">
               <i class="fa fa-leaf"></i> {{ product_detail.productlabel }}
             </div>
@@ -211,7 +223,11 @@
           <li [ngbNavItem]="2">
             <a ngbNavLink style="font-size: medium; font-weight: bold">Tips</a>
             <ng-template ngbNavContent>
-              <h2 style="font-size: medium">{{ product_detail.tips }}</h2>
+              <h2 style="font-size: medium" *ngFor="let tip of product_detail.tips">
+                <strong *ngIf="tip.includes(':')">{{ tip.split(':')[0] }}:</strong>
+                <span *ngIf="!tip.includes(':')">{{ tip.split(':')[0] }} </span>
+                {{ tip.split(':')[1] }}
+              </h2>
             </ng-template>
           </li>
         </ul>
@@ -229,46 +245,51 @@
         </div>
       </div>
     </div>
-    <div class="section" *ngIf="prod_detail && prod_detail.length > 0">
+    <div class="section related-products-section" *ngIf="prod_detail && prod_detail.length > 0">
       <div class="container">
-        <div class="" style="text-align: left">
-          <h2 style="font-weight: 600">Related Product</h2>
+        <div class="section-header">
+          <p class="section-subtitle">You May Also Like</p>
+          <h2 class="section-title">Related Products</h2>
+          <div class="title-underline"></div>
         </div>
       </div>
-      <div class="container front-display-section">
-        <div class="front-display-section-item" *ngFor="let prod of prod_detail">
-          <br />
-          <div
-            class="card"
-            style="margin-right: 20px"
-            [routerLink]="['/Product', prod.productname]"
-          >
-            <div class="card-cover">
-              <img
-                style="max-width: 100%"
-                src="{{ prod.productimg[0] }}"
-                alt="Description of the image"
-              />
-              <div class="stock-btn1" *ngIf="prod.stockAvailable === false">Out of stock</div>
-              <div class="discount-btn1" *ngIf="prod.discount !== 0">{{ prod.discount }}%</div>
-              <button class="wishlist-btn1" (click)="toggleWishlist(prod, $event)">
-                <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
-              </button>
+      <div class="container">
+        <div class="front-display-section">
+          <div class="product-card-wrapper" *ngFor="let prod of prod_detail">
+            <div class="product-card" [routerLink]="['/Product', prod.productname]">
+              <div class="product-image-wrapper">
+                <img
+                  class="product-image"
+                  src="./img/Plants/400/{{ prod.productimg[0] }}"
+                  srcset="./img/Plants/400/{{ prod.productimg[0] }} 400w, ./img/Plants/600/{{ prod.productimg[0] }} 600w, ./img/Plants/1200/{{ prod.productimg[0] }} 1200w"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  loading="lazy"
+                  alt="{{ prod.productname }} indoor plant"
+                />
+                <div class="stock-badge" *ngIf="prod.stockAvailable === false">
+                  <i class="fa fa-ban"></i> Out of stock
+                </div>
+                <div
+                  class="discount-badge"
+                  *ngIf="prod.discount !== 0 && prod.stockAvailable !== false"
+                >
+                  <i class="fa fa-tag"></i> {{ prod.discount }}% OFF
+                </div>
+                <button class="wishlist-btn" (click)="toggleWishlist(prod, $event)">
+                  <i class="fa" [ngClass]="prod.isWishlisted ? 'fa-heart' : 'fa-heart-o'"></i>
+                </button>
+              </div>
+              <div class="product-details">
+                <span class="product-category">{{ prod.productlabel }}</span>
+                <h4 class="product-name">{{ prod.productname }}</h4>
+                <div class="product-price">
+                  <span class="price-currency">₹</span>{{ prod.productlowprice }} -
+                  <span class="price-currency">₹</span>{{ prod.producthighprice }}
+                </div>
+              </div>
             </div>
           </div>
-          <p style="text-align: left; font-size: smaller">{{ prod.productlabel }}</p>
-          <p class="p-title" style="text-align: left">{{ prod.productname }}</p>
-          <p class="p-title" style="text-align: left">
-            <span>&#8377;</span>{{ prod.productlowprice }}-<span>&#8377;</span
-            >{{ prod.producthighprice }}
-          </p>
-          <!-- Star Rating Component
-        <app-star-rating
-          [rating]="prod.productrating"
-          [edit_rate]="1"
-          style="text-align: left"
-        ></app-star-rating>
-        --></div>
+        </div>
       </div>
     </div>
   </div>

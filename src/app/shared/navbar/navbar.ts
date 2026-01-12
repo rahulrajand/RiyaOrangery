@@ -123,6 +123,11 @@ export class Navbar {
     this.router.navigate(['/collection/', flora]);
   }
   goToWishlist() {
+    this.sidebarToggle();
     this.router.navigate(['/wishlist']);
+  }
+  goToCart() {
+    this.sidebarToggle();
+    this.router.navigate(['/cart']);
   }
 }

@@ -80,7 +80,8 @@ export class Cart implements OnInit {
       }
     }
     this.subtotal = this.cartItems.reduce((sum, item) => sum + item.producttotal, 0);
-    this.total = this.subtotal + this.shippingCost + this.shippingSoilCost;
+    //this.total = this.subtotal + this.shippingCost + this.shippingSoilCost;
+    this.total = this.subtotal;
   }
 
   updateQuantity(item: CartDetails, event: any) {

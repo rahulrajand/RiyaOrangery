@@ -43,10 +43,8 @@ export class App {
         .pipe(filter((event) => event instanceof NavigationEnd))
         .subscribe((event: NavigationEnd) => {
           const url = event.urlAfterRedirects.toLowerCase();
-          console.log('Navigated to URL:', url);
 
           this.isProductPage = url.includes('/product');
-          console.log('isProductPage', this.isProductPage);
           if (this.isProductPage) {
             navbar.classList.remove('navbar-transparent');
             return;
@@ -59,7 +57,6 @@ export class App {
             }
           }
         });
-      console.log('isProductPage', this.isProductPage);
       if (this.isProductPage) {
         navbar.classList.remove('navbar-transparent');
         return;

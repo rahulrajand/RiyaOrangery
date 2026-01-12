@@ -74,13 +74,19 @@
               <div class="product-image-wrapper">
                 <img
                   class="product-image"
-                  src="{{ prod.productimg[0] }}"
+                  src="./img/Plants/400/{{ prod.productimg[0] }}"
+                  srcset="./img/Plants/400/{{ prod.productimg[0] }} 400w, ./img/Plants/600/{{ prod.productimg[0] }} 600w, ./img/Plants/1200/{{ prod.productimg[0] }} 1200w"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  loading="lazy"
                   alt="{{ prod.productname }} indoor plant"
                 />
                 <div class="stock-badge" *ngIf="prod.stockAvailable === false">
                   <i class="fa fa-ban"></i> Out of stock
                 </div>
-                <div class="discount-badge" *ngIf="prod.discount !== 0">
+                <div
+                  class="discount-badge"
+                  *ngIf="prod.discount !== 0 && prod.stockAvailable !== false"
+                >
                   <i class="fa fa-tag"></i> {{ prod.discount }}% OFF
                 </div>
                 <button class="wishlist-btn" (click)="toggleWishlist(prod, $event)">
@@ -123,7 +129,7 @@
             <h2 class="knowledge-title">Your Trusted Online Store for Healthy Indoor Plants</h2>
           </div>
           <div class="knowledge-image">
-            <img src="./img/front1.jpeg" alt="Plant care guide" />
+            <img src="./img/front1.webp" alt="Plant care guide" />
           </div>
         </div>
         <div class="knowledge-content">
@@ -134,22 +140,23 @@
             </span>
             <span *ngIf="isMobile"> <br /><br /><br /> </span>
             <section class="seo-text container">
+              <p>Riya Orangery was born from a simple love for plants 🌿</p>
+
               <p>
-                Riya Orangery is your trusted destination for buying healthy indoor plants,
-                succulents, and cactus online in India. We carefully select plants that are easy to
-                maintain and perfect for homes, offices, and workspaces.
+                When a city girl’s passion met nature, a small cactus sparked a journey. After
+                seeing many indoor plants struggle and fail due to local climate conditions, she
+                realized that the plants she loved needed care that matched their native
+                environments. This led to the creation of a small home orangery—where plants could
+                grow healthy, happy, and stress-free.
               </p>
 
               <p>
-                Our collection includes air-purifying plants, low-light indoor plants, decorative
-                succulents, and unique gifting plants. Every plant is packed securely to ensure safe
-                delivery and lasting freshness.
+                Riya Orangery focuses on indoor plants, succulents, and cacti, grown with
+                understanding and patience. Our mission is to share real gardening experiences,
+                guide plant lovers, and help them nurture plants the right way—so love for plants
+                never turns into plant loss.
               </p>
-
-              <p>
-                Along with quality plants, we also provide expert care tips and soil guidance to
-                help your plants grow beautifully.
-              </p>
+              <p>Because every plant deserves a home where it can truly thrive. 🌱</p>
             </section>
             <!--
           <a
@@ -171,26 +178,27 @@
         </div>
         <div class="knowledge-image-wrapper">
           <div class="knowledge-image">
-            <img src="./img/front1.jpeg" alt="Plant care guide" />
+            <img src="./img/front2.webp" alt="Plant care guide" />
+          </div>
+          <div class="knowledge-image">
+            <img src="./img/front3.webp" alt="Plant care guide" />
           </div>
         </div>
         <div class="knowledge-content">
           <div>
             <section class="seo-text container">
+              <p>At Riya Orangery, healthy plants begin with the right soil.</p>
+
               <p>
-                We help you understand how to care for potted plants and flowers with ease. From
-                watering schedules and sunlight needs to soil selection and repotting tips, our
-                guidance is designed to keep your plants healthy and thriving.
+                We focus on carefully crafted soil recipes and proper potting practices,
+                understanding that soil is the foundation of plant life—especially for succulents
+                and indoor plants. Our mission is to share real gardening experience with our plant
+                family, helping them grow thriving plants and avoid common mistakes.
               </p>
 
               <p>
-                Whether you’re growing indoor plants, succulents, or cactus, you’ll find
-                easy-to-follow care tips suitable for homes, offices, and workspaces.
-              </p>
-
-              <p>
-                Our plant care knowledge is beginner-friendly and practical, helping you build
-                confidence and enjoy long-lasting greenery.
+                Riya Orangery was created from a deep love for succulents and cacti, with one simple
+                goal: grow plants right, and grow them well 🌱
               </p>
             </section>
             <!--

@@ -161,12 +161,23 @@
                   <div class="img-wrapper">
                     <img
                       [src]="p.productimg[0]"
-                      class="card-img-top product-image"
+                      src="./img/Plants/400/{{ p.productimg[0] }}"
+                      srcset="./img/Plants/400/{{ p.productimg[0] }} 400w, ./img/Plants/600/{{ p.productimg[0] }} 600w, ./img/Plants/1200/{{ p.productimg[0] }} 1200w"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                      loading="lazy"
                       alt="{{ p.productname }} indoor plant"
+                      class="card-img-top product-image"
                     />
 
-                    <div class="stock-btn" *ngIf="p.stockAvailable === false">Out of stock</div>
-                    <div class="discount-btn" *ngIf="p.discount !== 0">{{ p.discount }}%</div>
+                    <div class="stock-badge" *ngIf="p.stockAvailable === false">
+                      <i class="fa fa-ban"></i> Out of stock
+                    </div>
+                    <div
+                      class="discount-badge"
+                      *ngIf="p.discount !== 0 && p.stockAvailable !== false"
+                    >
+                      <i class="fa fa-tag"></i> {{ p.discount }}% OFF
+                    </div>
 
                     <!-- Wishlist Button -->
                     <button class="wishlist-btn" (click)="toggleWishlist(p, $event)">

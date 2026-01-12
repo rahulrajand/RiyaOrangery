@@ -54,7 +54,14 @@
                   </td>
                   <td data-label="Product">
                     <div class="wishlist-product">
-                      <img [src]="item.productimg[0]" alt="{{ item.productname }} indoor plant" />
+                      <img
+                        [src]="item.productimg[0]"
+                        src="./img/Plants/400/{{ item.productimg[0] }}"
+                        srcset="./img/Plants/400/{{ item.productimg[0] }} 400w, ./img/Plants/600/{{ item.productimg[0] }} 600w, ./img/Plants/1200/{{ item.productimg[0] }} 1200w"
+                        sizes="(max-width: 768px) 100vw, 33vw"
+                        loading="lazy"
+                        alt="{{ item.productname }} indoor plant"
+                      />
                       <div class="product-info">
                         <a [routerLink]="['/Product/', item.productname]" class="product-name">
                           {{ item.productname }}
@@ -64,7 +71,9 @@
                   </td>
                   <td data-label="Price">
                     <div class="price-display">
-                      <span class="price-amount">₹{{ item.productprice }}</span>
+                      <span class="price-amount"
+                        >₹{{ item.productlowprice }} - ₹{{ item.producthighprice }}</span
+                      >
                     </div>
                   </td>
                   <td data-label="Availability">

@@ -99,6 +99,7 @@ export class ComponentsService {
       product.discount = data.product[prod].discount;
       product.productpotsize = data.product[prod].productpotsize;
       product.tips = data.product[prod].tips;
+      product.productsciname = data.product[prod].productsciname;
 
       products.push(product);
     }

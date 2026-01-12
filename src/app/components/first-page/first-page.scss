@@ -247,7 +247,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
   padding: 8px 16px;
   border-radius: 50px;
@@ -256,7 +256,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgba(231, 76, 60, 0.3);
   z-index: 3;
 
   i {
@@ -268,7 +268,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: linear-gradient(135deg, #fc8181 0%, #f56565 100%);
+  background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
   color: white;
   padding: 8px 16px;
   border-radius: 50px;
@@ -277,9 +277,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 4px 12px rgba(252, 129, 129, 0.4);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 3;
-  animation: pulse 2s ease-in-out infinite;
 
   i {
     font-size: 0.9rem;
@@ -556,6 +555,63 @@
 
     &:hover img {
       transform: scale(1.05);
+    }
+  }
+}
+
+// Reduce size for the reverse section image (Plant Care Knowledge Base)
+.knowledge-section-reverse {
+  .knowledge-image-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    height: 600px;
+
+    @media (max-width: 768px) {
+      height: 450px;
+    }
+  }
+
+  .knowledge-image {
+    position: absolute;
+    max-width: 480px;
+    width: 60%;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    &:first-child {
+      top: 0;
+      left: 0;
+      z-index: 2;
+      height: 360px;
+
+      @media (max-width: 768px) {
+        height: 270px;
+      }
+    }
+
+    &:last-child {
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+      height: 360px;
+
+      @media (max-width: 768px) {
+        height: 270px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      max-width: 300px;
+      width: 65%;
     }
   }
 }
