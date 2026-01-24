@@ -213,10 +213,62 @@ export class Cart implements OnInit {
   }
 
   downloadPDF() {
-    if (!this.isFormValid()) {
+    /* if (!this.isFormValid()) {
       alert('Please fix all validation errors before proceeding to checkout.');
       return;
-    }
+    }*/
+    fetch('/.netlify/functions/calc-price', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items: this.cartItems.map((item) => ({
+          id: item.productid,
+          qty: item.productcount,
+          diam: item.productsize ?? 0,
+          pot: item.productpotsize ?? 0,
+          soil: item.productsoil ?? 0,
+        })),
+      }),
+    })
+      .then(async (res) => {
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Server error');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log('✅ Server response:', data);
+        this.updateCartItemsFromServer(data.products);
+        this.createAndDownloadPDF(data);
+      })
+      .catch((err) => {
+        console.error('❌ Price calc failed:', err.message);
+      });
+  }
+
+  private updateCartItemsFromServer(serverProducts: any[]) {
+    const serverMap = new Map(serverProducts.map((p) => [p.productid, p]));
+
+    this.cartItems = this.cartItems.map((item) => {
+      const serverItem = serverMap.get(item.productid);
+
+      if (!serverItem) {
+        return item; // fallback safety
+      }
+
+      return {
+        ...item,
+        productcount: serverItem.productcount,
+        productprice: serverItem.productprice,
+        productdisprice: serverItem.productdisprice,
+        producttotal: serverItem.producttotal,
+        productsize: serverItem.productsize,
+      };
+    });
+  }
+
+  private createAndDownloadPDF(value: any) {
     // Implement checkout logic
     const orderData = {
       customerName: this.customerName,
@@ -227,10 +279,10 @@ export class Cart implements OnInit {
       state: this.state,
       pincode: this.pincode,
       cartItems: this.cartItems,
-      subtotal: this.subtotal,
+      subtotal: value.totalAmount,
       shipping: this.shippingCost,
       shippingSoil: this.shippingSoilCost,
-      total: this.total,
+      total: value.totalAmount,
       Products: this.cartItems.map((item) => ({
         productid: item.productid,
         productname: item.productname,
@@ -294,11 +346,20 @@ export class Cart implements OnInit {
 
     doc.setFontSize(11);
     doc.text(`Subtotal: ${orderData.subtotal}`, 140, finalY);
-    doc.text(`Shipping: ${orderData.shipping}`, 140, finalY + 6);
-    doc.text(`Shipping For Soil: ${orderData.shippingSoil}`, 140, finalY + 6);
+    //doc.text(`Shipping: ${orderData.shipping}`, 140, finalY + 6);
+    //doc.text(`Shipping For Soil: ${orderData.shippingSoil}`, 140, finalY + 12);
 
     doc.setFontSize(12);
-    doc.text(`Total: ${orderData.total}`, 140, finalY + 14);
+    doc.text(`Total: ${orderData.total}`, 140, finalY + 8);
+
+    doc.setFontSize(11);
+    doc.text(
+      `Shipping charges will be shared at the time of invoicing, based on
+                  quantity.`,
+      14,
+      finalY + 26
+    );
+
     /* ---------- FOOTER ---------- */
     doc.setFontSize(9);
     doc.text(

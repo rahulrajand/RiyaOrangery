@@ -269,7 +269,7 @@
                 <span>Total:</span>
                 <span class="amount">₹{{ total | number : '1.2-2' }}</span>
               </div>
-              <button class="btn-checkout" [disabled]="!isFormValid()" (click)="downloadPDF()">
+              <button class="btn-checkout" (click)="downloadPDF()">
                 <i class="fa fa-download"></i> Download as PDF
               </button>
               <div class="whatsapp-section-checkout">

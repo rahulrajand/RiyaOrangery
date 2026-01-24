@@ -201,8 +201,23 @@ export class Products {
   }
 
   AddtoCart(product: any, event: Event) {
-    if (this.soil == '' && this.diamet == '' && this.pots == '') {
-      this.errorMessage = 'Please select Plant Diameter, Pot & Soil!';
+    if (this.soil == '' || this.diamet == '' || this.pots == '') {
+      this.errorMessage = 'Please select ';
+      console.log(this.errorMessage);
+      if (this.diamet == '') {
+        this.errorMessage += ' Plant Diameter,';
+      }
+      console.log(this.errorMessage);
+      if (this.soil == '') {
+        this.errorMessage += ' Soil,';
+      }
+      console.log(this.errorMessage);
+      if (this.pots == '') {
+        this.errorMessage += ' Pot,';
+      }
+      console.log(this.errorMessage);
+      this.errorMessage = this.errorMessage.slice(0, -1) + '!';
+      console.log(this.errorMessage);
       return;
     }
     let cart: CartDetails = {} as CartDetails;
