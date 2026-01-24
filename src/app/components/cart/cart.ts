@@ -18,6 +18,7 @@ export class Cart implements OnInit {
   shippingCost: number = 50;
   shippingSoilCost: number = 0;
   total: number = 0;
+  showClearConfirm: boolean = false;
 
   // Personal Info
   customerName: string = '';
@@ -96,9 +97,16 @@ export class Cart implements OnInit {
   }
 
   clearCart() {
-    if (confirm('Are you sure you want to clear your cart?')) {
-      this.componentsService.clearCart();
-    }
+    this.showClearConfirm = true;
+  }
+
+  confirmClearCart() {
+    this.clearCartInternal();
+    this.showClearConfirm = false;
+  }
+
+  cancelClearCart() {
+    this.showClearConfirm = false;
   }
 
   validateName() {
@@ -213,11 +221,10 @@ export class Cart implements OnInit {
   }
 
   downloadPDF() {
-    /* if (!this.isFormValid()) {
-      alert('Please fix all validation errors before proceeding to checkout.');
+    /*  if (!this.isFormValid()) {
       return;
     }*/
-    fetch('/.netlify/functions/calc-price', {
+    /*  fetch('/.netlify/functions/calc-price', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -244,7 +251,8 @@ export class Cart implements OnInit {
       })
       .catch((err) => {
         console.error('❌ Price calc failed:', err.message);
-      });
+      });*/
+    this.createAndDownloadPDF();
   }
 
   private updateCartItemsFromServer(serverProducts: any[]) {
@@ -266,9 +274,11 @@ export class Cart implements OnInit {
         productsize: serverItem.productsize,
       };
     });
+    this.subtotal = serverMap.get('totalAmount') || this.subtotal;
+    this.total = serverMap.get('totalAmount') || this.total;
   }
 
-  private createAndDownloadPDF(value: any) {
+  private async createAndDownloadPDF() {
     // Implement checkout logic
     const orderData = {
       customerName: this.customerName,
@@ -279,10 +289,10 @@ export class Cart implements OnInit {
       state: this.state,
       pincode: this.pincode,
       cartItems: this.cartItems,
-      subtotal: value.totalAmount,
+      subtotal: this.subtotal,
       shipping: this.shippingCost,
       shippingSoil: this.shippingSoilCost,
-      total: value.totalAmount,
+      total: this.total,
       Products: this.cartItems.map((item) => ({
         productid: item.productid,
         productname: item.productname,
@@ -295,6 +305,13 @@ export class Cart implements OnInit {
         producttotal: item.producttotal,
       })),
     };
+
+    // Load all product images as base64
+    const imagePromises = this.cartItems.map((item) =>
+      this.getBase64ImageFromURL(`./img/Plants/400/${item.productimg}`)
+    );
+    const images = await Promise.all(imagePromises);
+
     const doc = new jsPDF();
     /* ---------- HEADER ---------- */
     doc.setFontSize(18);
@@ -321,8 +338,9 @@ export class Cart implements OnInit {
     /* ---------- PRODUCTS TABLE ---------- */
     autoTable(doc, {
       startY: 78,
-      head: [['Product', 'Quantity', 'Plant Diameter', 'Pot size', 'Soil', 'Price', 'Total']],
-      body: orderData.cartItems.map((item) => [
+      head: [['Image', 'Product', 'Qty', 'Diameter', 'Pot', 'Soil', 'Price', 'Total']],
+      body: orderData.cartItems.map((item, index) => [
+        '', // Placeholder for image
         item.productname,
         item.productcount,
         item.productsize,
@@ -337,7 +355,36 @@ export class Cart implements OnInit {
         textColor: 255,
       },
       styles: {
-        fontSize: 10,
+        fontSize: 9,
+        cellPadding: 3,
+        minCellHeight: 22,
+      },
+      columnStyles: {
+        0: { cellWidth: 20, halign: 'center' }, // Image column
+        1: { cellWidth: 'auto' }, // Product name
+        2: { cellWidth: 15, halign: 'center' }, // Quantity
+        3: { cellWidth: 20, halign: 'center' }, // Diameter
+        4: { cellWidth: 15, halign: 'center' }, // Pot
+        5: { cellWidth: 20, halign: 'center' }, // Soil
+        6: { cellWidth: 20, halign: 'right' }, // Price
+        7: { cellWidth: 25, halign: 'right' }, // Total
+      },
+      didDrawCell: (data: any) => {
+        // Add images to the first column
+        if (data.section === 'body' && data.column.index === 0) {
+          const rowIndex = data.row.index;
+          if (images[rowIndex]) {
+            try {
+              const img = images[rowIndex];
+              const cellX = data.cell.x + 2;
+              const cellY = data.cell.y + 2;
+              const imgSize = 18;
+              doc.addImage(img, 'JPEG', cellX, cellY, imgSize, imgSize);
+            } catch (error) {
+              console.error('Error adding image to PDF:', error);
+            }
+          }
+        }
       },
     });
 
@@ -372,6 +419,35 @@ export class Cart implements OnInit {
     /* ---------- SAVE ---------- */
     doc.save('order-invoice.pdf');
     this.clearCart();
+  }
+
+  private getBase64ImageFromURL(url: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = 'Anonymous';
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          const dataURL = canvas.toDataURL('image/jpeg');
+          resolve(dataURL);
+        } else {
+          reject('Canvas context not available');
+        }
+      };
+      img.onerror = (error) => {
+        console.error('Error loading image:', url, error);
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+
+  private clearCartInternal() {
+    this.componentsService.clearCart();
   }
 
   sendPdfToWhatsApp() {

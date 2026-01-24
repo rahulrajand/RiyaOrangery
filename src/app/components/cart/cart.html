@@ -285,3 +285,27 @@
     </div>
   </div>
 </div>
+
+<!-- Clear Cart Modal -->
+<div
+  class="clear-cart-backdrop"
+  *ngIf="showClearConfirm"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="clearCartTitle"
+  aria-describedby="clearCartDesc"
+>
+  <div class="clear-cart-modal">
+    <div class="modal-icon">
+      <i class="fa fa-trash"></i>
+    </div>
+    <h3 id="clearCartTitle">Clear your cart?</h3>
+    <p id="clearCartDesc">
+      This will remove all items from your cart. You can always continue shopping afterwards.
+    </p>
+    <div class="modal-actions">
+      <button type="button" class="btn-ghost" (click)="cancelClearCart()">Keep items</button>
+      <button type="button" class="btn-danger" (click)="confirmClearCart()">Yes, clear it</button>
+    </div>
+  </div>
+</div>

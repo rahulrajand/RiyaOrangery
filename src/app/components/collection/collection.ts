@@ -16,6 +16,7 @@ export class Collection {
   full_product_detail = new Array<ProductDetails>();
   product_detail = new Array<ProductDetails>();
   product_detail_copy = new Array<ProductDetails>();
+  visibleCount: number = 20;
   category_selected: string = '';
   plantDM_selected: string = '';
   plantPR_selected: string = '';
@@ -164,6 +165,7 @@ export class Collection {
     }
 
     this.product_detail = data;
+    this.resetVisibleCount();
   }
 
   public onCategoryClick(category: Event | any) {
@@ -223,5 +225,14 @@ export class Collection {
         break;
     }
     this.Dropdown_select = option;
+    this.visibleCount = Math.min(this.visibleCount, this.product_detail.length);
+  }
+
+  loadMore() {
+    this.visibleCount = Math.min(this.visibleCount + 10, this.product_detail.length);
+  }
+
+  private resetVisibleCount() {
+    this.visibleCount = Math.min(20, this.product_detail.length);
   }
 }

@@ -152,7 +152,10 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-6 col-md-4 mb-4" *ngFor="let p of product_detail">
+              <div
+                class="col-sm-6 col-md-4 mb-4"
+                *ngFor="let p of product_detail | slice : 0 : visibleCount"
+              >
                 <a
                   class="card"
                   [routerLink]="['/Product', p.productname]"
@@ -193,6 +196,12 @@
                   </div>
                 </a>
               </div>
+            </div>
+
+            <div class="load-more-wrapper" *ngIf="product_detail.length > visibleCount">
+              <button class="btn-load-more" type="button" (click)="loadMore()">
+                <i class="fa fa-plus-circle"></i> Show more products
+              </button>
             </div>
           </main>
         </div>
