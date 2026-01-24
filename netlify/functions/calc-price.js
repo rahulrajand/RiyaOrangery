@@ -1,5 +1,4 @@
-const fs = require('fs');
-const path = require('path');
+const data = require('./product.json');
 
 exports.handler = async (event) => {
   try {
@@ -7,8 +6,6 @@ exports.handler = async (event) => {
 
     // Load product JSON (server-side only)
     console.log('FILES:', fs.readdirSync(__dirname));
-    const filePath = path.join(__dirname, 'product.json');
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
     let totalAmount = 0;
     const products = [];
