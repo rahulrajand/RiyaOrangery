@@ -221,10 +221,10 @@ export class Cart implements OnInit {
   }
 
   downloadPDF() {
-    /*  if (!this.isFormValid()) {
+    if (!this.isFormValid()) {
       return;
-    }*/
-    /*  fetch('/.netlify/functions/calc-price', {
+    }
+    fetch('/.netlify/functions/calc-price', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -247,12 +247,11 @@ export class Cart implements OnInit {
       .then((data) => {
         console.log('✅ Server response:', data);
         this.updateCartItemsFromServer(data.products);
-        this.createAndDownloadPDF(data);
+        this.createAndDownloadPDF();
       })
       .catch((err) => {
         console.error('❌ Price calc failed:', err.message);
-      });*/
-    this.createAndDownloadPDF();
+      });
   }
 
   private updateCartItemsFromServer(serverProducts: any[]) {
