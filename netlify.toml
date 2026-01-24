@@ -2,4 +2,4 @@
     command = "ng build"
     publish = "dist/ClientPage/browser"
     functions = "netlify/functions"
-    included_files = ["netlify/data/product.json"]
+    included_files = ["netlify/functions/product.json"]

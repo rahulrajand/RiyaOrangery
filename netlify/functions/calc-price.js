@@ -6,6 +6,7 @@ exports.handler = async (event) => {
     const { items } = JSON.parse(event.body);
 
     // Load product JSON (server-side only)
+    console.log('FILES:', fs.readdirSync(__dirname));
     const filePath = path.join(__dirname, 'product.json');
     const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
 
