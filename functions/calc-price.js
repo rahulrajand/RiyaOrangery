@@ -1,19 +1,20 @@
-const data = require('./product.json');
-const fs = require('fs');
-const path = require('path');
-
-exports.handler = async (event) => {
+export async function onRequestPost({ request }) {
   try {
-    const { items } = JSON.parse(event.body);
+    const { items } = await request.json();
 
-    // Load product JSON (server-side only)
-    console.log('FILES:', fs.readdirSync(__dirname));
+    // 🔁 FETCH product.json instead of fs
+    const res = await fetch('https://riyaorangery.in/product.json');
+
+    if (!res.ok) {
+      throw new Error('Unable to load product data');
+    }
+
+    const data = await res.json();
 
     let totalAmount = 0;
     const products = [];
 
-    items.forEach((item) => {
-      // 🔍 Find product by ID
+    for (const item of items) {
       const product = data.product.find((p) => p.productid === item.id);
 
       if (!product) {
@@ -24,7 +25,6 @@ exports.handler = async (event) => {
          1️⃣ DIAMETER / SIZE LOGIC
       =============================== */
 
-      // Extract number from diameter (ex: "5 inches" OR index)
       let sizeIndex = 0;
 
       if (typeof item.diam === 'string') {
@@ -43,7 +43,6 @@ exports.handler = async (event) => {
       =============================== */
 
       const discount = product.discount || 0;
-
       let discountedPrice = Math.round(price - (price * discount) / 100);
 
       /* ===============================
@@ -61,9 +60,6 @@ exports.handler = async (event) => {
         case 1:
           price += 25;
           discountedPrice += 25;
-          break;
-
-        default:
           break;
       }
 
@@ -94,19 +90,12 @@ exports.handler = async (event) => {
         productdisprice: discountedPrice,
         producttotal: itemTotal,
       });
-    });
+    }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        products,
-        totalAmount,
-      }),
-    };
+    return new Response(JSON.stringify({ products, totalAmount }), {
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (error) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({ error: error.message }),
-    };
+    return new Response(JSON.stringify({ error: error.message }), { status: 400 });
   }
-};
+}

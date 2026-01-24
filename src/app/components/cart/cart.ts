@@ -224,7 +224,7 @@ export class Cart implements OnInit {
     if (!this.isFormValid()) {
       return;
     }
-    fetch('/.netlify/functions/calc-price', {
+    fetch('/calc-price', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
