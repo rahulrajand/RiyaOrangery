@@ -224,63 +224,86 @@
 
         <!-- FILTER CONTENT -->
         <div class="p-3">
+          <!-- CATEGORY FILTER -->
           <div class="filter-box mb-3">
             <div class="filter-header" (click)="toggleFilterBox('category')">
-              <h5 style="font-weight: bold">Filter By Category</h5>
+              <div class="filter-title">
+                <i class="fa fa-filter"></i>
+                <h5>Filter By Category</h5>
+              </div>
               <i
                 class="nc-icon"
                 [ngClass]="filterToggle.category ? 'nc-minimal-up' : 'nc-minimal-down'"
               >
               </i>
             </div>
-            <h6 style="font-size: x-small">{{ category_selected }}</h6>
+            <div class="selected-filter" *ngIf="category_selected">
+              <i class="fa fa-check-circle"></i> {{ category_selected }}
+            </div>
 
-            <div class="filter-content form-check" *ngIf="filterToggle.category">
-              <label class="form-check-label" (click)="onCategoryClick($event)"
-                ><h6>All Category</h6></label
-              >
+            <div class="filter-content" *ngIf="filterToggle.category">
+              <label class="filter-option all-category" (click)="onCategoryClick($event)">
+                <i class="fa fa-th"></i> All Category
+              </label>
               <div *ngFor="let c of categories">
-                <label class="form-check-label" (click)="onCategoryClick($event)">
-                  {{ c.name }}
+                <label
+                  class="filter-option"
+                  [class.active]="category_selected === c.name"
+                  (click)="onCategoryClick($event)"
+                >
+                  <i class="fa fa-leaf"></i> {{ c.name }}
                 </label>
               </div>
             </div>
           </div>
 
-          <!-- PRICE FILTER -->
+          <!-- PLANT DIAMETER FILTER -->
           <div class="filter-box mb-3">
             <div class="filter-header" (click)="toggleFilterBox('plant-Diameter')">
-              <h5 style="font-weight: bold">Plant Diameter</h5>
+              <div class="filter-title">
+                <i class="fa fa-expand"></i>
+                <h5>Plant Diameter</h5>
+              </div>
               <i
                 class="nc-icon"
                 [ngClass]="filterToggle['plant-Diameter'] ? 'nc-minimal-up' : 'nc-minimal-down'"
               >
               </i>
             </div>
-            <h6 style="font-size: x-small">{{ plantDM_selected }}</h6>
+            <div class="selected-filter" *ngIf="plantDM_selected">
+              <i class="fa fa-check-circle"></i> {{ plantDM_selected }}
+            </div>
             <div class="filter-content" *ngIf="filterToggle['plant-Diameter']">
-              <button
-                type="button"
-                class="btn btn-sm m-1"
-                (click)="onDiameterClick($event)"
-                *ngFor="let diam_val of diam"
-              >
-                {{ diam_val }}
-              </button>
+              <div class="size-buttons">
+                <button
+                  type="button"
+                  class="size-btn"
+                  [class.active]="plantDM_selected === diam_val"
+                  (click)="onDiameterClick($event)"
+                  *ngFor="let diam_val of diam"
+                >
+                  {{ diam_val }}
+                </button>
+              </div>
             </div>
           </div>
 
-          <!-- COLOR FILTER -->
+          <!-- PRICE FILTER -->
           <div class="filter-box mb-3">
             <div class="filter-header" (click)="toggleFilterBox('price')">
-              <h5 style="font-weight: bold">Price</h5>
+              <div class="filter-title">
+                <i class="fa fa-money"></i>
+                <h5>Price</h5>
+              </div>
               <i
                 class="nc-icon"
                 [ngClass]="filterToggle.price ? 'nc-minimal-up' : 'nc-minimal-down'"
               >
               </i>
             </div>
-            <h6 style="font-size: x-small">{{ plantPR_selected }}</h6>
+            <div class="selected-filter" *ngIf="plantPR_selected">
+              <i class="fa fa-check-circle"></i> {{ plantPR_selected }}
+            </div>
 
             <div class="filter-content" *ngIf="filterToggle.price">
               <nouislider
@@ -291,7 +314,7 @@
                 [step]="10"
                 [(ngModel)]="doubleSlider"
                 [tooltips]="[false, false]"
-                (click)="onPriceClick($event)"
+                (ngModelChange)="onPriceClick($event)"
               ></nouislider>
               <span class="price-range"
                 >Price: ₹{{ doubleSlider[0] }} - ₹{{ doubleSlider[1] }}</span

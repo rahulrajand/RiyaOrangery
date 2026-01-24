@@ -1,7 +1,4 @@
 import {
-  NgTemplateOutlet
-} from "./chunk-3SJ4UDZF.js";
-import {
   takeUntilDestroyed
 } from "./chunk-WY64GS5E.js";
 import {
@@ -12,6 +9,9 @@ import {
   ngbRunTransition,
   reflow
 } from "./chunk-VOE7HPUZ.js";
+import {
+  NgTemplateOutlet
+} from "./chunk-3SJ4UDZF.js";
 import {
   Attribute,
   ChangeDetectionStrategy,
@@ -939,4 +939,4 @@ export {
   NgbNavOutlet,
   NgbNavModule
 };
-//# sourceMappingURL=chunk-W7XUCVIU.js.map
+//# sourceMappingURL=chunk-KTDLLWWD.js.map

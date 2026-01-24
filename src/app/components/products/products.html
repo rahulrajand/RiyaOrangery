@@ -24,6 +24,11 @@
         <div class="product-main">
           <!-- LEFT: Image -->
           <div class="product-gallery">
+            <!-- Back to Collection Link -->
+            <a [routerLink]="['/collection', categoryForBackLink]" class="back-to-collection">
+              <i class="fa fa-arrow-left"></i> Back to Collection
+            </a>
+
             <!-- Main Product Image -->
             <div class="main-image">
               <ngb-carousel

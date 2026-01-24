@@ -2,9 +2,6 @@ import {
   NG_VALUE_ACCESSOR
 } from "./chunk-CGFN5PJK.js";
 import {
-  NgTemplateOutlet
-} from "./chunk-3SJ4UDZF.js";
-import {
   Live,
   PopupService,
   addPopperOffset,
@@ -15,6 +12,9 @@ import {
   removeAccents,
   toString
 } from "./chunk-VOE7HPUZ.js";
+import {
+  NgTemplateOutlet
+} from "./chunk-3SJ4UDZF.js";
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -849,4 +849,4 @@ export {
   NgbTypeahead,
   NgbTypeaheadModule
 };
-//# sourceMappingURL=chunk-RDUC67WK.js.map
+//# sourceMappingURL=chunk-DPEGZE7X.js.map

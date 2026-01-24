@@ -28,6 +28,7 @@ export class Products {
   diamet: string = '';
   soil: string = '';
   pots: string = '';
+  categoryForBackLink: string = '';
 
   constructor(
     private componentservice: ComponentsService,
@@ -73,6 +74,7 @@ export class Products {
       console.error('Product not found');
     } else {
       this.selectedImage = this.product_detail.productimg[0];
+      this.categoryForBackLink = 'all';
     }
     this.componentservice.currentData$.subscribe((data) => {
       this.full_product_detail = data;

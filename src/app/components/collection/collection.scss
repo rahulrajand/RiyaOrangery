@@ -541,11 +541,96 @@ body.filter-open {
   width: 90%;
   max-width: 360px;
   height: 100%;
-  background: white;
+  background: #f8f9fa;
   z-index: 9999;
   transition: left 0.3s ease;
   box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
+
+  // Ensure all filter boxes inside mobile panel have the same styles
+  .filter-box {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 16px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  // Ensure filter options have proper styling
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    margin: 4px 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95rem;
+    color: #555;
+
+    i {
+      color: #6aa84f;
+      font-size: 0.9rem;
+    }
+
+    &:hover {
+      background: rgba(106, 168, 79, 0.08);
+      color: #2c3e50;
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #6aa84f, #558b3c);
+      color: white;
+      font-weight: 600;
+
+      i {
+        color: white;
+      }
+    }
+
+    &.all-category {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+  }
+
+  // Ensure size buttons have same styling
+  .size-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .size-btn {
+    padding: 10px 16px;
+    border: 2px solid #ddd;
+    background: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #555;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: #6aa84f;
+      background: rgba(106, 168, 79, 0.05);
+      transform: translateY(-2px);
+    }
+
+    &.active {
+      border-color: #6aa84f;
+      background: linear-gradient(135deg, #6aa84f, #558b3c);
+      color: white;
+      box-shadow: 0 4px 8px rgba(106, 168, 79, 0.3);
+    }
+  }
 }
 
 .mobile-filter-panel.open {
