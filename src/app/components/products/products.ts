@@ -35,7 +35,7 @@ export class Products {
     private route: ActivatedRoute,
     private componentsService: ComponentsService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -70,6 +70,7 @@ export class Products {
       name: 'description',
       content: `Buy ${this.product_detail.productname} indoor plant online from Riya Orangery. ${this.product_detail.shortDescription}`,
     });
+    console.log(this.product_detail);
     if (!this.product_detail) {
       console.error('Product not found');
     } else {
@@ -119,13 +120,34 @@ export class Products {
     this.carousel.select(`slide-${i}`);
   }
 
+  getRiskClass(risk?: string) {
+    const value = (risk || '').toLowerCase();
+
+    if (value.includes('low') || value.includes('safe')) {
+      return 'risk-low';
+    }
+    if (value.includes('medium') || value.includes('moderate')) {
+      return 'risk-medium';
+    }
+    if (
+      value.includes('high') ||
+      value.includes('severe') ||
+      value.includes('extreme') ||
+      value.includes('critical')
+    ) {
+      return 'risk-high';
+    }
+
+    return 'risk-unknown';
+  }
+
   public updatePriceRange() {
     console.log('called');
     const max = this.diamet.match(/\d+/g)?.map(Number) || 0;
     let index = this.product_detail.productsize.indexOf(max.toString());
     this.price_range = this.product_detail.productprice[index];
     this.price_range_updated = Math.round(
-      this.price_range - (this.price_range * this.product_detail.discount) / 100
+      this.price_range - (this.price_range * this.product_detail.discount) / 100,
     );
     console.log(this.pots);
     switch (this.pots) {

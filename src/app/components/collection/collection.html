@@ -79,15 +79,15 @@
                 >
                 </i>
               </div>
-              <div class="selected-filter" *ngIf="plantDM_selected">
-                <i class="fa fa-check-circle"></i> {{ plantDM_selected }}
+              <div class="selected-filter" *ngIf="plantDM_selected.length > 0">
+                <i class="fa fa-check-circle"></i> {{ plantDM_selected.join(', ') }}
               </div>
               <div class="filter-content" *ngIf="filterToggle['plant-Diameter']">
                 <div class="size-buttons">
                   <button
                     type="button"
                     class="size-btn"
-                    [class.active]="plantDM_selected === diam_val"
+                    [class.active]="plantDM_selected.includes(diam_val)"
                     (click)="onDiameterClick($event)"
                     *ngFor="let diam_val of diam"
                   >
@@ -154,7 +154,7 @@
             <div class="row">
               <div
                 class="col-sm-6 col-md-4 mb-4"
-                *ngFor="let p of product_detail | slice : 0 : visibleCount"
+                *ngFor="let p of product_detail | slice: 0 : visibleCount"
               >
                 <a
                   class="card"
@@ -270,15 +270,15 @@
               >
               </i>
             </div>
-            <div class="selected-filter" *ngIf="plantDM_selected">
-              <i class="fa fa-check-circle"></i> {{ plantDM_selected }}
+            <div class="selected-filter" *ngIf="plantDM_selected.length > 0">
+              <i class="fa fa-check-circle"></i> {{ plantDM_selected.join(', ') }}
             </div>
             <div class="filter-content" *ngIf="filterToggle['plant-Diameter']">
               <div class="size-buttons">
                 <button
                   type="button"
                   class="size-btn"
-                  [class.active]="plantDM_selected === diam_val"
+                  [class.active]="plantDM_selected.includes(diam_val)"
                   (click)="onDiameterClick($event)"
                   *ngFor="let diam_val of diam"
                 >

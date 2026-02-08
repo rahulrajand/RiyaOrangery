@@ -18,8 +18,9 @@ export class ProductDetails {
     public tips?: string[],
     public productsciname?: string,
     public shortDescription?: string,
+    public risk?: string,
     public isWishlisted: boolean = false,
-    public stockAvailable: boolean = false
+    public stockAvailable: boolean = false,
   ) {}
 }
 

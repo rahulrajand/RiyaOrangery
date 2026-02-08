@@ -18,7 +18,7 @@ export class Collection {
   product_detail_copy = new Array<ProductDetails>();
   visibleCount: number = 20;
   category_selected: string = '';
-  plantDM_selected: string = '';
+  plantDM_selected: string[] = [];
   plantPR_selected: string = '';
 
   scrollToSection() {
@@ -29,7 +29,7 @@ export class Collection {
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
     private meta: Meta,
-    private title: Title
+    private title: Title,
   ) {
     this.title.setTitle('Indoor Plants Collection | Riya Orangery');
     this.meta.updateTag({
@@ -78,7 +78,7 @@ export class Collection {
     });
     let flora_detail = this.componentservice.getAllCategory();
     flora_detail = Array.from(
-      new Set(flora_detail.flatMap((item) => item.split(',').map((v) => v.trim())))
+      new Set(flora_detail.flatMap((item) => item.split(',').map((v) => v.trim()))),
     );
     this.categories = flora_detail.map((flora) => ({
       name: flora,
@@ -145,15 +145,16 @@ export class Collection {
       : [...this.full_product_detail];
 
     // STEP 2: DIAMETER FILTER (OPTIONAL)
-    if (this.plantDM_selected) {
-      const [minD, maxD] = this.plantDM_selected.match(/\d+/g)?.map(Number) ?? [];
-      console.log('Diameter Filter:', minD, maxD);
+    if (this.plantDM_selected.length > 0) {
+      const ranges = this.plantDM_selected
+        .map((range) => range.match(/\d+/g)?.map(Number) ?? [])
+        .filter((vals) => vals.length === 2) as number[][];
 
       data = data.filter((p) =>
         p.productsize.some((size) => {
           const s = +size;
-          return s >= minD && s <= maxD;
-        })
+          return ranges.some(([minD, maxD]) => s >= minD && s <= maxD);
+        }),
       );
     }
 
@@ -177,7 +178,7 @@ export class Collection {
         : clickedElement.innerText;
 
     // reset secondary filters
-    this.plantDM_selected = '';
+    this.plantDM_selected = [];
     this.plantPR_selected = '';
 
     this.applyFilters();
@@ -185,7 +186,12 @@ export class Collection {
   public onDiameterClick(diameter: Event | any) {
     const clickedElement = diameter.target as HTMLButtonElement;
     console.log(clickedElement.innerText);
-    this.plantDM_selected = clickedElement.innerText;
+    const value = clickedElement.innerText;
+    if (this.plantDM_selected.includes(value)) {
+      this.plantDM_selected = this.plantDM_selected.filter((v) => v !== value);
+    } else {
+      this.plantDM_selected = [...this.plantDM_selected, value];
+    }
     this.applyFilters();
   }
   public onPriceClick(price: Event | any) {
@@ -204,19 +210,19 @@ export class Collection {
     switch (option) {
       case 'Sort by Alphabetical':
         this.product_detail = [...this.product_detail].sort((a, b) =>
-          a.productname.localeCompare(b.productname, undefined, { sensitivity: 'base' })
+          a.productname.localeCompare(b.productname, undefined, { sensitivity: 'base' }),
         );
         break;
 
       case 'Sort by Low to high':
         this.product_detail = [...this.product_detail].sort(
-          (a, b) => a.productlowprice - b.productlowprice
+          (a, b) => a.productlowprice - b.productlowprice,
         );
         break;
 
       case 'Sort By high to low':
         this.product_detail = [...this.product_detail].sort(
-          (a, b) => b.producthighprice - a.producthighprice
+          (a, b) => b.producthighprice - a.producthighprice,
         );
         break;
 

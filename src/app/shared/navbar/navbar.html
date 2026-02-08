@@ -44,6 +44,79 @@
     </div>
     <div class="navbar-collapse" id="navbarToggler">
       <ul class="navbar-nav ml-auto">
+        <li class="nav-item search-item" [class.open]="showSearch">
+          <button
+            class="nav-link nav-icon-link search-toggle"
+            type="button"
+            rel="tooltip"
+            title="Search"
+            data-placement="bottom"
+            (click)="toggleSearch()"
+          >
+            <div class="icon-wrapper">
+              <i class="fa fa-search"></i>
+            </div>
+            <span class="d-lg-none nav-label">Search</span>
+          </button>
+          <div class="search-dropdown" *ngIf="showSearch">
+            <div class="search-input-wrapper">
+              <input
+                class="search-input"
+                type="text"
+                placeholder="Search plants, categories..."
+                [value]="searchTerm"
+                (input)="onSearchChange($any($event.target).value)"
+              />
+              <button
+                class="clear-btn"
+                type="button"
+                *ngIf="searchTerm"
+                (click)="clearSearch()"
+                aria-label="Clear search"
+              >
+                ×
+              </button>
+            </div>
+            <div class="search-results" *ngIf="searchTerm">
+              <button
+                class="search-result-item"
+                type="button"
+                *ngFor="let prod of searchResults"
+                (click)="goToProduct(prod)"
+              >
+                <img
+                  class="result-image"
+                  [src]="'./img/Plants/400/' + prod.productimg[0]"
+                  [alt]="prod.productname + ' plant'"
+                />
+                <div class="result-text">
+                  <span class="result-name">{{ prod.productname }}</span>
+                  <span class="result-meta">{{ prod.productlabel }}</span>
+                </div>
+              </button>
+              <div class="no-results" *ngIf="searchResults.length === 0">No results found.</div>
+            </div>
+            <div class="search-results" *ngIf="!searchTerm">
+              <div class="suggested-title">Suggested plants</div>
+              <button
+                class="search-result-item"
+                type="button"
+                *ngFor="let prod of suggestedResults"
+                (click)="goToProduct(prod)"
+              >
+                <img
+                  class="result-image"
+                  [src]="'./img/Plants/400/' + prod.productimg[0]"
+                  [alt]="prod.productname + ' plant'"
+                />
+                <div class="result-text">
+                  <span class="result-name">{{ prod.productname }}</span>
+                  <span class="result-meta">{{ prod.productlabel }}</span>
+                </div>
+              </button>
+            </div>
+          </div>
+        </li>
         <li class="nav-item">
           <a
             class="nav-link nav-icon-link"

@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { ComponentsService } from '../../components/components.service';
+import { ProductDetails } from '../../components/components.model';
 
 @Component({
   selector: 'app-navbar',
@@ -23,6 +24,12 @@ export class Navbar {
   public isScrolled: boolean = false;
   public isProductPage: boolean = false;
 
+  public showSearch: boolean = false;
+  public searchTerm: string = '';
+  public searchResults: ProductDetails[] = [];
+  public suggestedResults: ProductDetails[] = [];
+  private allProducts: ProductDetails[] = [];
+
   public flora_detail: string[] = [];
 
   enableColorOnScroll = false;
@@ -34,13 +41,13 @@ export class Navbar {
     private router: Router,
     private route: ActivatedRoute,
     @Inject(PLATFORM_ID) private platformId: Object,
-    private componentsService: ComponentsService
+    private componentsService: ComponentsService,
   ) {
     this.sidebarVisible = false;
     this.flora_detail = this.componentsService.getAllCategory();
     this.flora_detail.splice(0, 0, 'All Flora');
     this.flora_detail = Array.from(
-      new Set(this.flora_detail.flatMap((item) => item.split(',').map((v) => v.trim())))
+      new Set(this.flora_detail.flatMap((item) => item.split(',').map((v) => v.trim()))),
     );
   }
 
@@ -64,6 +71,11 @@ export class Navbar {
     });
     this.componentsService.cartlist$.subscribe((cartlist) => {
       this.cartItemCount = cartlist.reduce((acc, item) => acc + item.productcount, 0);
+    });
+    this.componentsService.currentData$.subscribe((data) => {
+      this.allProducts = data || [];
+      this.updateSearchResults(this.searchTerm);
+      this.updateSuggestedResults();
     });
     this.checkScreen();
     if (isPlatformBrowser(this.platformId)) {
@@ -129,5 +141,63 @@ export class Navbar {
   goToCart() {
     this.sidebarToggle();
     this.router.navigate(['/cart']);
+  }
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+    if (!this.showSearch) {
+      this.clearSearch();
+    } else {
+      this.updateSuggestedResults();
+    }
+  }
+
+  onSearchChange(term: string) {
+    this.searchTerm = term;
+    this.updateSearchResults(term);
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.searchResults = [];
+  }
+
+  private updateSearchResults(term: string) {
+    const query = (term || '').trim().toLowerCase();
+    if (!query) {
+      this.searchResults = [];
+      return;
+    }
+
+    this.searchResults = this.allProducts
+      .filter((p) => {
+        const name = p.productname?.toLowerCase() || '';
+        const label = p.productlabel?.toLowerCase() || '';
+        const sci = p.productsciname?.toLowerCase() || '';
+        const shortDesc = p.shortDescription?.toLowerCase() || '';
+        return (
+          name.includes(query) ||
+          label.includes(query) ||
+          sci.includes(query) ||
+          shortDesc.includes(query)
+        );
+      })
+      .slice(0, 8);
+  }
+
+  private updateSuggestedResults() {
+    if (!this.allProducts.length) {
+      this.suggestedResults = [];
+      return;
+    }
+    const shuffled = [...this.allProducts].sort(() => 0.5 - Math.random());
+    this.suggestedResults = shuffled.slice(0, 3);
+  }
+
+  goToProduct(product: ProductDetails) {
+    this.sidebarToggle();
+    this.showSearch = false;
+    this.clearSearch();
+    this.router.navigate(['/Product', product.productname]);
   }
 }

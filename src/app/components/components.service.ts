@@ -62,7 +62,7 @@ export class ComponentsService {
         p.productid === product.productid &&
         p.productsize === product.productsize &&
         p.productpotsize === product.productpotsize &&
-        p.productsoil === product.productsoil
+        p.productsoil === product.productsoil,
     );
     if (index === -1) {
       this.cartlist.next([...this.cartlist.value, product]);
@@ -88,13 +88,13 @@ export class ComponentsService {
       product.productlowprice = data.product[prod].productlowprice;
       product.producthighprice = data.product[prod].producthighprice;
       product.productprice = data.product[prod].productprice;
-      product.productdisc = data.product[prod].productdisc;
       product.productrating = data.product[prod].productrating;
       product.frontpage = data.product[prod].frontpage;
       product.productimg = data.product[prod].productimg;
       product.productsize = data.product[prod].productsize;
       product.description = data.product[prod].description;
       product.shortDescription = data.product[prod].shortDescription;
+      product.risk = data.product[prod].risk;
       product.stockAvailable = data.product[prod].stockAvailable;
       product.discount = data.product[prod].discount;
       product.productpotsize = data.product[prod].productpotsize;
@@ -126,7 +126,7 @@ export class ComponentsService {
           p.productsize === product.productsize &&
           p.productpotsize === product.productpotsize &&
           p.productsoil === product.productsoil
-        )
+        ),
     );
     this.cartlist.next(updatedCart);
     if (isPlatformBrowser(this.platformId)) {
@@ -140,7 +140,7 @@ export class ComponentsService {
         p.productid === product.productid &&
         p.productsize === product.productsize &&
         p.productpotsize === product.productpotsize &&
-        p.productsoil === product.productsoil
+        p.productsoil === product.productsoil,
     );
     if (index !== -1) {
       this.cartlist.value[index].productcount = quantity;

@@ -163,6 +163,35 @@
   }
 }
 
+/* Price slider (nouislider) green theme */
+:host ::ng-deep .slider .noUi-target {
+  background: #e2e8f0;
+  border: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+:host ::ng-deep .slider .noUi-connect {
+  background: linear-gradient(135deg, #6aa84f, #558b3c);
+}
+
+:host ::ng-deep .slider .noUi-handle {
+  border: 2px solid #6aa84f;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(106, 168, 79, 0.35);
+}
+
+:host ::ng-deep .slider .noUi-handle:before,
+:host ::ng-deep .slider .noUi-handle:after {
+  background: #6aa84f;
+}
+
+:host ::ng-deep .slider .noUi-tooltip {
+  background: #6aa84f;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+}
+
 /* Collection Toolbar */
 .collection-toolbar {
   display: flex;
@@ -801,7 +830,9 @@ body.filter-open {
   align-items: center;
   gap: 10px;
   box-shadow: 0 10px 24px rgba(106, 168, 79, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.25s ease;
 }
 
 .btn-load-more:hover {
