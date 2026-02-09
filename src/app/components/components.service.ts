@@ -68,6 +68,12 @@ export class ComponentsService {
       this.cartlist.next([...this.cartlist.value, product]);
     } else {
       this.cartlist.value[index].productcount += product.productcount;
+      const activePrice =
+        this.cartlist.value[index].productdisprice === 0
+          ? this.cartlist.value[index].productprice
+          : this.cartlist.value[index].productdisprice;
+      this.cartlist.value[index].producttotal =
+        this.cartlist.value[index].productcount * activePrice;
       this.cartlist.next([...this.cartlist.value]);
     }
     for (let i = 0; i < this.cartlist.value.length; i++) {
