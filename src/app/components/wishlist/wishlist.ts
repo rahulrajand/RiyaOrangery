@@ -16,7 +16,7 @@ export class Wishlist {
   constructor(
     private componentservice: ComponentsService,
     private meta: Meta,
-    private title: Title
+    private title: Title,
   ) {
     this.componentservice.wishlist$.subscribe((data) => {
       this.wishlist = data.map((item) => ({ ...item, selected: false }));
@@ -28,9 +28,7 @@ export class Wishlist {
     this.componentservice.updateWishlist(product);
   }
 
-  AddtoCart(item: any, list: Event) {
-    console.log('Add to cart', item);
-  }
+  AddtoCart(item: any, list: Event) {}
 
   toggleAll(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;

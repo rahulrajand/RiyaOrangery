@@ -54,7 +54,7 @@
                 <label class="filter-option all-category" (click)="onCategoryClick($event)">
                   <i class="fa fa-th"></i> All Category
                 </label>
-                <div *ngFor="let c of categories">
+                <div *ngFor="let c of categories | slice: 0 : categoryDisplayCount">
                   <label
                     class="filter-option"
                     [class.active]="category_selected === c.name"
@@ -63,6 +63,18 @@
                     <i class="fa fa-leaf"></i> {{ c.name }}
                   </label>
                 </div>
+                <button
+                  type="button"
+                  class="btn-show-more"
+                  *ngIf="categories.length > categoryDefaultCount"
+                  (click)="toggleCategoryList()"
+                >
+                  <i
+                    class="fa"
+                    [ngClass]="showAllCategories ? 'fa-chevron-up' : 'fa-chevron-down'"
+                  ></i>
+                  {{ showAllCategories ? 'Show less' : 'Show more' }}
+                </button>
               </div>
             </div>
 
@@ -245,7 +257,7 @@
               <label class="filter-option all-category" (click)="onCategoryClick($event)">
                 <i class="fa fa-th"></i> All Category
               </label>
-              <div *ngFor="let c of categories">
+              <div *ngFor="let c of categories | slice: 0 : categoryDisplayCount">
                 <label
                   class="filter-option"
                   [class.active]="category_selected === c.name"
@@ -254,6 +266,18 @@
                   <i class="fa fa-leaf"></i> {{ c.name }}
                 </label>
               </div>
+              <button
+                type="button"
+                class="btn-show-more"
+                *ngIf="categories.length > categoryDefaultCount"
+                (click)="toggleCategoryList()"
+              >
+                <i
+                  class="fa"
+                  [ngClass]="showAllCategories ? 'fa-chevron-up' : 'fa-chevron-down'"
+                ></i>
+                {{ showAllCategories ? 'Show less' : 'Show more' }}
+              </button>
             </div>
           </div>
 

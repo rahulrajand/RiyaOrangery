@@ -101,11 +101,27 @@ export class ComponentsService {
       product.description = data.product[prod].description;
       product.shortDescription = data.product[prod].shortDescription;
       product.risk = data.product[prod].risk;
-      product.stockAvailable = data.product[prod].stockAvailable;
-      product.discount = data.product[prod].discount;
+      const stockValue = data.product[prod].stockAvailable;
+      if (Array.isArray(stockValue)) {
+        product.stockBySize = stockValue;
+        product.stockAvailable = stockValue.some((value) => value === true);
+      } else {
+        product.stockBySize = undefined;
+        product.stockAvailable = stockValue === true;
+      }
+      const discountValue = data.product[prod].discount;
+      if (Array.isArray(discountValue)) {
+        product.discountBySize = discountValue;
+        const maxDiscount = Math.max(0, ...discountValue.map((value) => value || 0));
+        product.discount = maxDiscount;
+      } else {
+        product.discountBySize = undefined;
+        product.discount = discountValue || 0;
+      }
       product.productpotsize = data.product[prod].productpotsize;
       product.tips = data.product[prod].tips;
       product.productsciname = data.product[prod].productsciname;
+      product.category = data.product[prod].category;
 
       products.push(product);
     }

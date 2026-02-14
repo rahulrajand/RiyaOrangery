@@ -284,9 +284,25 @@
     box-shadow: 0 4px 12px rgba(106, 168, 79, 0.3);
   }
 
+  &.out-of-stock {
+    border-color: #e74c3c;
+    color: #a94442;
+    opacity: 0.65;
+  }
+
   &:focus {
     outline: none;
   }
+}
+
+.size-stock-badge {
+  margin-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #c0392b;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 // Final Price Display
@@ -910,9 +926,6 @@
       }
     }
   }
-}
-
-.stock-btn {
 }
 
 .stock-badge {

@@ -31,6 +31,8 @@ export class Navbar {
   private allProducts: ProductDetails[] = [];
 
   public flora_detail: string[] = [];
+  public floraDefaultCount: number = 8;
+  public showAllFlora: boolean = false;
 
   enableColorOnScroll = false;
   isMobile = false;
@@ -49,6 +51,15 @@ export class Navbar {
     this.flora_detail = Array.from(
       new Set(this.flora_detail.flatMap((item) => item.split(',').map((v) => v.trim()))),
     );
+    this.showAllFlora = false;
+  }
+
+  get floraDisplayCount(): number {
+    return this.showAllFlora ? this.flora_detail.length : this.floraDefaultCount;
+  }
+
+  toggleFloraList() {
+    this.showAllFlora = !this.showAllFlora;
   }
 
   ngOnInit() {

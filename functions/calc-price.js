@@ -25,11 +25,27 @@ export async function onRequestPost({ request }) {
          1️⃣ DIAMETER / SIZE LOGIC
       =============================== */
 
+      const categoryKey = (product.category || '').trim().toLowerCase();
+      const hasPotOptions = categoryKey === 'plant';
+      const hasSoilOptions = categoryKey === 'plant';
       let sizeIndex = 0;
 
       if (typeof item.diam === 'string') {
-        const max = item.diam.match(/\d+/g)?.map(Number)?.[0];
-        sizeIndex = product.productsize.indexOf(max?.toString());
+        const trimmedLabel = item.diam.trim();
+
+        // First check if the exact label exists in productsize (handles cases like "100g", "1kg", etc.)
+        if (product.productsize.includes(trimmedLabel)) {
+          sizeIndex = product.productsize.indexOf(trimmedLabel);
+        } else if (categoryKey === 'plant') {
+          // For plant category items with " inches" suffix, extract just the numeric part
+          const match = trimmedLabel.match(/\d+/);
+          if (match) {
+            sizeIndex = product.productsize.indexOf(match[0]);
+          }
+        } else {
+          // For other categories, use the label as-is
+          sizeIndex = product.productsize.indexOf(trimmedLabel);
+        }
       } else {
         sizeIndex = item.diam ?? 0;
       }
@@ -37,37 +53,50 @@ export async function onRequestPost({ request }) {
       if (sizeIndex < 0) sizeIndex = 0;
 
       let price = product.productprice[sizeIndex];
+      const stockValue = product.stockAvailable;
+      const sizeInStock = Array.isArray(stockValue)
+        ? stockValue[sizeIndex] === true
+        : stockValue !== false;
+
+      if (!sizeInStock) {
+        throw new Error('Selected size is out of stock');
+      }
 
       /* ===============================
          2️⃣ DISCOUNT LOGIC
       =============================== */
 
-      const discount = product.discount || 0;
+      let discount = product.discount || 0;
+      if (Array.isArray(discount)) {
+        discount = discount[sizeIndex] || 0;
+      }
       let discountedPrice = Math.round(price - (price * discount) / 100);
 
       /* ===============================
          3️⃣ POT PRICE LOGIC
       =============================== */
 
-      switch (item.pot) {
-        case '3 inches':
-        case 0:
-          price += 20;
-          discountedPrice += 20;
-          break;
+      if (hasPotOptions) {
+        switch (item.pot) {
+          case '3 inches':
+          case 0:
+            price += 20;
+            discountedPrice += 20;
+            break;
 
-        case '4 inches':
-        case 1:
-          price += 25;
-          discountedPrice += 25;
-          break;
+          case '4 inches':
+          case 1:
+            price += 25;
+            discountedPrice += 25;
+            break;
+        }
       }
 
       /* ===============================
          4️⃣ SOIL PRICE LOGIC
       =============================== */
 
-      if (item.soil === 'With Soil' || item.soil === 1) {
+      if (hasSoilOptions && (item.soil === 'With Soil' || item.soil === 1)) {
         price += 15;
         discountedPrice += 15;
       }

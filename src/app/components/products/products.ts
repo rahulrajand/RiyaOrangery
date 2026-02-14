@@ -28,7 +28,23 @@ export class Products {
   diamet: string = '';
   soil: string = '';
   pots: string = '';
+  selectedSizeInStock: boolean | null = null;
   categoryForBackLink: string = '';
+  private getCategoryKey(): string {
+    return (this.product_detail?.category || '').trim().toLowerCase();
+  }
+
+  isPlantCategory(): boolean {
+    return this.getCategoryKey().includes('plant');
+  }
+
+  hasPotOptions(): boolean {
+    return this.getCategoryKey() === 'plant';
+  }
+
+  hasSoilOptions(): boolean {
+    return this.getCategoryKey() === 'plant';
+  }
 
   constructor(
     private componentservice: ComponentsService,
@@ -44,7 +60,6 @@ export class Products {
     });
   }
   loadPlantData(id: string | null) {
-    console.log('Loading product data for id:', id);
     this.product_detail = null as any;
     this.selectedImage = '';
     this.diam = [];
@@ -56,21 +71,20 @@ export class Products {
     this.soil = '';
     this.price_range = 0;
     this.price_range_updated = 0;
+    this.selectedSizeInStock = null;
     this.full_product_detail = null as any;
     this.prod_detail = null as any;
     this.errorMessage = '';
     this.diam = [];
-    this.pot = ['No Pot'];
-    this.Soil = ['Without Soil', 'With Soil'];
 
     this.product_detail = this.componentsService.getProductByname(id!) as ProductDetails;
     this.title.setTitle(`${this.product_detail.productname} Indoor Plant | Riya Orangery`);
-
+    this.pot = this.hasPotOptions() ? ['No Pot'] : [];
+    this.Soil = this.hasSoilOptions() ? ['Without Soil', 'With Soil'] : [];
     this.meta.updateTag({
       name: 'description',
       content: `Buy ${this.product_detail.productname} indoor plant online from Riya Orangery. ${this.product_detail.shortDescription}`,
     });
-    console.log(this.product_detail);
     if (!this.product_detail) {
       console.error('Product not found');
     } else {
@@ -80,7 +94,6 @@ export class Products {
     this.componentservice.currentData$.subscribe((data) => {
       this.full_product_detail = data;
     });
-    console.log(this.full_product_detail);
     this.prod_detail = [];
     const currentLabels = this.product_detail.productlabel
       .split(',')
@@ -99,14 +112,14 @@ export class Products {
         this.prod_detail.push(this.full_product_detail[i]);
       }
     }
-    console.log(this.prod_detail);
     this.getRandomProducts(3);
-    console.log(this.prod_detail);
     for (let size of this.product_detail.productsize) {
-      this.diam.push('' + size + ' inches');
+      this.diam.push(this.isPlantCategory() ? `${size} inches` : `${size}`);
     }
-    for (let size of this.product_detail.productpotsize) {
-      this.pot.push('' + size + ' inches');
+    if (this.hasPotOptions()) {
+      for (let size of this.product_detail.productpotsize) {
+        this.pot.push(`${size} inches`);
+      }
     }
   }
 
@@ -142,44 +155,120 @@ export class Products {
   }
 
   public updatePriceRange() {
-    console.log('called');
-    const max = this.diamet.match(/\d+/g)?.map(Number) || 0;
-    let index = this.product_detail.productsize.indexOf(max.toString());
-    this.price_range = this.product_detail.productprice[index];
-    this.price_range_updated = Math.round(
-      this.price_range - (this.price_range * this.product_detail.discount) / 100,
-    );
-    console.log(this.pots);
-    switch (this.pots) {
-      case '3 inches':
-        this.price_range += 20;
-        this.price_range_updated += 20;
-        break;
-      case '4 inches':
-        this.price_range += 25;
-        this.price_range_updated += 25;
-        break;
-      default:
-        break;
+    const sizeValue = this.getSizeValueFromLabel(this.diamet);
+    let index = sizeValue ? this.product_detail.productsize.indexOf(sizeValue) : -1;
+    if (index < 0) {
+      index = 0;
     }
-    if (this.soil == 'With Soil') {
+    this.price_range = this.product_detail.productprice[index];
+    const sizeDiscount = this.getDiscountForSelectedSize();
+    this.price_range_updated = Math.round(
+      this.price_range - (this.price_range * sizeDiscount) / 100,
+    );
+    if (this.hasPotOptions()) {
+      switch (this.pots) {
+        case '3 inches':
+          this.price_range += 20;
+          this.price_range_updated += 20;
+          break;
+        case '4 inches':
+          this.price_range += 25;
+          this.price_range_updated += 25;
+          break;
+        default:
+          break;
+      }
+    }
+    if (this.hasSoilOptions() && this.soil == 'With Soil') {
       this.price_range += 15;
       this.price_range_updated += 15;
     }
     this.errorMessage = '';
-    console.log(this.price_range, '   ', this.price_range_updated);
+  }
+
+  private getSizeValueFromLabel(label: string): string | null {
+    if (!label) {
+      return null;
+    }
+
+    const trimmedLabel = label.trim();
+
+    // First check if the exact label exists in productsize (handles cases like "100g", "1kg", etc.)
+    if (this.product_detail?.productsize?.includes(trimmedLabel)) {
+      return trimmedLabel;
+    }
+
+    // For plant category items with " inches" suffix, extract just the numeric part
+    if (this.isPlantCategory()) {
+      const match = trimmedLabel.match(/\d+/);
+      if (match) {
+        return match[0];
+      }
+    }
+
+    // Return the trimmed label as-is for other categories
+    return trimmedLabel;
+  }
+
+  private isSizeValueInStock(sizeValue: string | null): boolean {
+    if (!sizeValue) {
+      return this.product_detail?.stockAvailable !== false;
+    }
+    const sizeIndex = this.product_detail.productsize.indexOf(sizeValue);
+    if (sizeIndex < 0) {
+      return this.product_detail?.stockAvailable !== false;
+    }
+    const stockBySize = this.product_detail.stockBySize;
+    if (!Array.isArray(stockBySize)) {
+      return this.product_detail?.stockAvailable !== false;
+    }
+    return stockBySize[sizeIndex] === true;
+  }
+
+  private getDiscountForSelectedSize(): number {
+    const sizeValue = this.getSizeValueFromLabel(this.diamet);
+    if (!sizeValue) {
+      return this.product_detail?.discount || 0;
+    }
+    const sizeIndex = this.product_detail.productsize.indexOf(sizeValue);
+    if (sizeIndex < 0) {
+      return this.product_detail?.discount || 0;
+    }
+    const discountBySize = this.product_detail.discountBySize;
+    if (!Array.isArray(discountBySize)) {
+      return this.product_detail?.discount || 0;
+    }
+    return discountBySize[sizeIndex] || 0;
+  }
+
+  public isSizeInStockLabel(label: string): boolean {
+    return this.isSizeValueInStock(this.getSizeValueFromLabel(label));
+  }
+
+  public canAddToCart(): boolean {
+    if (this.selectedSizeInStock === false) {
+      return false;
+    }
+    return this.product_detail?.stockAvailable === true;
   }
 
   public onDiameterClick(diameter: Event | any) {
     const clickedElement = diameter.target as HTMLButtonElement;
     this.diamet = clickedElement.innerText;
-    if (this.soil == '' && this.pots == '') {
+    this.selectedSizeInStock = this.isSizeInStockLabel(this.diamet);
+    if (this.selectedSizeInStock === false) {
+      this.errorMessage = 'Selected size is out of stock.';
+      return;
+    }
+    if (this.hasPotOptions() && this.pots == '' && this.hasSoilOptions() && this.soil == '') {
       this.errorMessage = 'Please select Soil & Pot!';
       return;
-    } else if (this.soil == '') {
+    }
+    if (this.hasSoilOptions() && this.soil == '') {
       this.errorMessage = 'Please select Soil!';
       return;
-    } else if (this.pots == '') {
+    }
+    if (this.hasPotOptions() && this.pots == '') {
       this.errorMessage = 'Please select Pot!';
       return;
     }
@@ -187,6 +276,9 @@ export class Products {
   }
 
   public onPotClick(pot: Event | any) {
+    if (!this.hasPotOptions()) {
+      return;
+    }
     const clickedElement = pot.target as HTMLButtonElement;
     this.pots = clickedElement.innerText;
     if (this.soil == '' && this.diamet == '') {
@@ -203,6 +295,9 @@ export class Products {
   }
 
   public onSoilClick(diameter: Event | any) {
+    if (!this.hasSoilOptions()) {
+      return;
+    }
     const clickedElement = diameter.target as HTMLButtonElement;
     this.soil = clickedElement.innerText;
     if (this.pots == '' && this.diamet == '') {
@@ -225,35 +320,38 @@ export class Products {
   }
 
   AddtoCart(product: any, event: Event) {
-    if (this.soil == '' || this.diamet == '' || this.pots == '') {
+    if (this.selectedSizeInStock === false) {
+      this.errorMessage = 'Selected size is out of stock.';
+      return;
+    }
+    if (
+      (this.hasSoilOptions() && this.soil == '') ||
+      this.diamet == '' ||
+      (this.hasPotOptions() && this.pots == '')
+    ) {
       this.errorMessage = 'Please select ';
-      console.log(this.errorMessage);
       if (this.diamet == '') {
         this.errorMessage += ' Plant Diameter,';
       }
-      console.log(this.errorMessage);
-      if (this.soil == '') {
+      if (this.hasSoilOptions() && this.soil == '') {
         this.errorMessage += ' Soil,';
       }
-      console.log(this.errorMessage);
-      if (this.pots == '') {
+      if (this.hasPotOptions() && this.pots == '') {
         this.errorMessage += ' Pot,';
       }
-      console.log(this.errorMessage);
       this.errorMessage = this.errorMessage.slice(0, -1) + '!';
-      console.log(this.errorMessage);
       return;
     }
     let cart: CartDetails = {} as CartDetails;
     cart.productid = product.productid;
     cart.productname = product.productname;
     cart.productsize = this.diamet;
-    cart.productpotsize = this.pots;
-    cart.productsoil = this.soil;
+    cart.productpotsize = this.hasPotOptions() ? this.pots : '';
+    cart.productsoil = this.hasSoilOptions() ? this.soil : '';
     cart.productcount = this.quantity;
     cart.productimg = product.productimg[0];
     cart.productprice = this.price_range;
-    cart.discount = product.discount;
+    cart.discount = this.getDiscountForSelectedSize();
     cart.productdisprice = this.price_range_updated;
     if (this.price_range_updated == 0) {
       cart.producttotal = this.quantity * this.price_range;

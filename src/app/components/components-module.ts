@@ -15,9 +15,28 @@ import { Products } from './products/products';
 import { NgbCarouselModule, NgbModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { Wishlist } from './wishlist/wishlist';
 import { Cart } from './cart/cart';
+import { ShippingPolicy } from './shipping-policy/shipping-policy';
+import { RefundPolicy } from './refund-policy/refund-policy';
+import { PrivacyPolicy } from './privacy-policy/privacy-policy';
+import { TermsConditions } from './terms-conditions/terms-conditions';
+import { AboutUs } from './about-us/about-us';
 
 @NgModule({
-  declarations: [Components, FirstPage, StarRating, AllProduct, Collection, Products, Wishlist, Cart],
+  declarations: [
+    Components,
+    FirstPage,
+    StarRating,
+    AllProduct,
+    Collection,
+    Products,
+    Wishlist,
+    Cart,
+    ShippingPolicy,
+    RefundPolicy,
+    PrivacyPolicy,
+    TermsConditions,
+    AboutUs,
+  ],
   imports: [
     CommonModule,
     FormsModule,

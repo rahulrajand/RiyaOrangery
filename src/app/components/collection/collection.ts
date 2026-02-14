@@ -20,6 +20,8 @@ export class Collection {
   category_selected: string = '';
   plantDM_selected: string[] = [];
   plantPR_selected: string = '';
+  categoryDefaultCount: number = 6;
+  showAllCategories: boolean = false;
 
   scrollToSection() {
     this.mySection.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -72,7 +74,6 @@ export class Collection {
       this.full_product_detail = data;
       this.route.paramMap.subscribe((params) => {
         const flora = params.get('name');
-        console.log('Flora changed:', flora);
         this.onCategoryClick({ target: { innerText: flora } });
       });
     });
@@ -84,6 +85,7 @@ export class Collection {
       name: flora,
       checked: false,
     }));
+    this.showAllCategories = false;
     const allSizes = this.full_product_detail.flatMap((p) => p.productsize.map(Number));
     const maxSize = Math.max(...allSizes);
     for (let i = 0; i < maxSize; i += 2) {
@@ -119,6 +121,14 @@ export class Collection {
 
   toggleFilterBox(type: keyof typeof this.filterToggle) {
     this.filterToggle[type] = !this.filterToggle[type];
+  }
+
+  get categoryDisplayCount(): number {
+    return this.showAllCategories ? this.categories.length : this.categoryDefaultCount;
+  }
+
+  toggleCategoryList() {
+    this.showAllCategories = !this.showAllCategories;
   }
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -171,7 +181,6 @@ export class Collection {
 
   public onCategoryClick(category: Event | any) {
     const clickedElement = category.target as HTMLLabelElement;
-    console.log(clickedElement.innerText);
     this.category_selected =
       clickedElement.innerText === 'all' || clickedElement.innerText === 'All Category'
         ? ''
@@ -185,7 +194,6 @@ export class Collection {
   }
   public onDiameterClick(diameter: Event | any) {
     const clickedElement = diameter.target as HTMLButtonElement;
-    console.log(clickedElement.innerText);
     const value = clickedElement.innerText;
     if (this.plantDM_selected.includes(value)) {
       this.plantDM_selected = this.plantDM_selected.filter((v) => v !== value);

@@ -19,7 +19,10 @@ export class ProductDetails {
     public productsciname?: string,
     public shortDescription?: string,
     public risk?: string,
+    public category?: string,
     public isWishlisted: boolean = false,
+    public stockBySize?: boolean[],
+    public discountBySize?: number[],
     public stockAvailable: boolean = false,
   ) {}
 }

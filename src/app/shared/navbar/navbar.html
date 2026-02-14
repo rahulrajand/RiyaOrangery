@@ -20,10 +20,23 @@
             Flora
           </a>
           <div ngbDropdownMenu aria-labelledby="dropdownBasic1" class="dropdown-menu-modern">
-            <a class="dropdown-item" *ngFor="let flora of flora_detail" (click)="ChangePage(flora)">
+            <a
+              class="dropdown-item"
+              *ngFor="let flora of flora_detail | slice: 0 : floraDisplayCount"
+              (click)="ChangePage(flora)"
+            >
               <i class="fa fa-leaf"></i>
               {{ flora }}
             </a>
+            <button
+              type="button"
+              class="dropdown-show-more"
+              *ngIf="flora_detail.length > floraDefaultCount"
+              (click)="toggleFloraList()"
+            >
+              <i class="fa" [ngClass]="showAllFlora ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+              {{ showAllFlora ? 'Show less' : 'Show more' }}
+            </button>
           </div>
         </div>
       </div>

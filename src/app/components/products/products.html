@@ -118,7 +118,8 @@
             <div class="product-options" *ngIf="product_detail.stockAvailable === true">
               <div class="option-group">
                 <label class="option-label">
-                  <i class="fa fa-expand"></i> Plant Diameter
+                  <i class="fa fa-expand"></i>
+                  {{ isPlantCategory() ? 'Plant Diameter' : 'Size' }}
                   <span class="selected-value" *ngIf="diamet">: {{ this.diamet }}</span>
                 </label>
                 <div class="option-buttons">
@@ -126,15 +127,20 @@
                     type="button"
                     class="option-btn"
                     [class.active]="diamet === diameter"
+                    [class.out-of-stock]="!isSizeInStockLabel(diameter)"
+                    [attr.aria-disabled]="!isSizeInStockLabel(diameter)"
                     (click)="onDiameterClick($event)"
                     *ngFor="let diameter of diam"
                   >
                     {{ diameter }}
                   </button>
                 </div>
+                <div class="size-stock-badge" *ngIf="diamet && selectedSizeInStock === false">
+                  <i class="fa fa-ban"></i> Out of stock for selected size
+                </div>
               </div>
 
-              <div class="option-group">
+              <div class="option-group" *ngIf="hasPotOptions()">
                 <label class="option-label">
                   <i class="fa fa-clone"></i> Pot Diameter
                   <span class="selected-value" *ngIf="pots">: {{ this.pots }}</span>
@@ -152,7 +158,7 @@
                 </div>
               </div>
 
-              <div class="option-group">
+              <div class="option-group" *ngIf="hasSoilOptions()">
                 <label class="option-label">
                   <i class="fa fa-tint"></i> Soil Type
                   <span class="selected-value" *ngIf="soil">: {{ this.soil }}</span>
@@ -198,6 +204,7 @@
                 <button
                   class="btn-add-cart"
                   *ngIf="product_detail.stockAvailable === true"
+                  [disabled]="!canAddToCart()"
                   (click)="AddtoCart(product_detail, $event)"
                 >
                   <i class="fa fa-shopping-cart"></i> Add to Cart
