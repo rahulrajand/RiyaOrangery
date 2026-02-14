@@ -86,8 +86,21 @@ export class Collection {
       checked: false,
     }));
     this.showAllCategories = false;
-    const allSizes = this.full_product_detail.flatMap((p) => p.productsize.map(Number));
-    const maxSize = Math.max(...allSizes);
+
+    // Only include numeric sizes from plant category products for diameter filter
+    const plantProducts = this.full_product_detail.filter(
+      (p) => (p.category || '').trim().toLowerCase() === 'plant',
+    );
+    const numericSizes = plantProducts
+      .flatMap((p) =>
+        p.productsize.map((size) => {
+          const num = Number(size);
+          return !isNaN(num) ? num : null;
+        }),
+      )
+      .filter((size) => size !== null) as number[];
+
+    const maxSize = numericSizes.length > 0 ? Math.max(...numericSizes) : 0;
     for (let i = 0; i < maxSize; i += 2) {
       this.diam.push('' + i + ' - ' + (i + 2) + ' inches');
     }
